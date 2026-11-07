@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Data Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-void:#0a0e17;
+    --bg-panel:#10151f;
+    --bg-panel-alt:#151c2c;
+    --bg-card:#131a28;
+    --border:#232c42;
+    --border-soft:#1a2133;
+    --text-primary:#e9ecf4;
+    --text-dim:#8c95ad;
+    --text-faint:#5b637a;
+    --accent-cyan:#4fd6c8;
+    --accent-violet:#a389f4;
+    --accent-amber:#f2c14e;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --radius:14px;
+    --sidebar-w:320px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg-void);
+    color:var(--text-primary);
+    font-family:var(--font-body);
+    line-height:1.6;
+    min-height:100vh;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(79,214,200,0.05), transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(163,137,244,0.06), transparent 45%);
+  }
+
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;}
+  input,textarea{font-family:inherit;}
+
+  :focus-visible{
+    outline:2px solid var(--accent-cyan);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-cyan);
+  }
+
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;}
+
+  /* ===== Layout ===== */
+  .app{
+    display:flex;
+    min-height:100vh;
+    max-width:1400px;
+    margin:0 auto;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--bg-panel);
+    border-right:1px solid var(--border-soft);
+    padding:2.2rem 1.8rem;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:1.6rem;
+  }
+
+  .profile-card{
+    position:relative;
+    text-align:center;
+    padding-bottom:1.4rem;
+  }
+
+  .pipeline-bg{
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%);
+    width:220px; height:220px;
+    opacity:0.5;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .pipeline-bg circle.node{
+    fill:var(--accent-cyan);
+  }
+  .pipeline-bg .pulse{
+    fill:none;
+    stroke:var(--accent-violet);
+    stroke-width:1.4;
+    stroke-dasharray:6 10;
+    animation:flow 3.5s linear infinite;
+    opacity:0.7;
+  }
+  @keyframes flow{
+    to{stroke-dashoffset:-160;}
+  }
+
+  .avatar{
+    position:relative;
+    z-index:1;
+    width:118px;height:118px;
+    border-radius:50%;
+    margin:0 auto 1rem;
+    background:linear-gradient(145deg, var(--bg-card), var(--bg-panel-alt));
+    border:2px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);
+    font-size:2.2rem;
+    font-weight:700;
+    color:var(--accent-cyan);
+    box-shadow:0 0 0 6px rgba(79,214,200,0.05), 0 0 40px rgba(79,214,200,0.08);
+  }
+
+  .profile-name{
+    position:relative;z-index:1;
+    font-size:1.4rem;
+    margin-bottom:0.5rem;
+  }
+
+  .profile-title{
+    position:relative;z-index:1;
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--text-dim);
+  }
+  .profile-title .sep{color:var(--accent-violet);}
+
+  .btn-contacts{
+    margin-top:1.2rem;
+    width:100%;
+    padding:0.7rem 1rem;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    color:var(--text-primary);
+    font-size:0.82rem;
+    font-weight:500;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .btn-contacts:hover{border-color:var(--accent-cyan);}
+  .btn-contacts svg{width:14px;height:14px;transition:transform .25s ease;}
+  .btn-contacts.open svg{transform:rotate(180deg);}
+
+  .contacts-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .contacts-panel.open{max-height:400px;}
+  .contacts-list{padding-top:1rem;display:flex;flex-direction:column;gap:0.9rem;}
+  .contact-item{display:flex;gap:0.7rem;align-items:flex-start;}
+  .contact-item .icon{
+    width:30px;height:30px;flex-shrink:0;
+    border-radius:8px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--accent-cyan);
+  }
+  .contact-item .icon svg{width:14px;height:14px;}
+  .contact-label{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);font-family:var(--font-mono);}
+  .contact-value{font-size:0.86rem;color:var(--text-primary);word-break:break-word;}
+
+  .socials{display:flex;gap:0.6rem;margin-top:1.4rem;justify-content:center;}
+  .socials a{
+    width:36px;height:36px;border-radius:9px;
+    background:var(--bg-card);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-dim);
+    transition:all .2s ease;
+  }
+  .socials a:hover{color:var(--accent-cyan);border-color:var(--accent-cyan);transform:translateY(-2px);}
+  .socials svg{width:16px;height:16px;}
+
+  hr.divider{border:none;border-top:1px solid var(--border-soft);}
+
+  .nav-tabs{display:flex;flex-direction:column;gap:0.3rem;}
+  .nav-tabs button{
+    text-align:left;
+    padding:0.75rem 0.9rem;
+    background:transparent;
+    border:none;
+    border-radius:9px;
+    color:var(--text-dim);
+    font-size:0.9rem;
+    font-weight:500;
+    display:flex;align-items:center;gap:0.7rem;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-tabs button svg{width:16px;height:16px;flex-shrink:0;}
+  .nav-tabs button:hover{background:var(--bg-card);color:var(--text-primary);}
+  .nav-tabs button.active{
+    background:linear-gradient(90deg, rgba(79,214,200,0.12), rgba(163,137,244,0.06));
+    color:var(--accent-cyan);
+    box-shadow:inset 0 0 0 1px rgba(79,214,200,0.25);
+  }
+
+  .lang-toggle{
+    margin-top:auto;
+    display:flex;
+    gap:0.3rem;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0.3rem;
+  }
+  .lang-toggle button{
+    flex:1;
+    padding:0.4rem 0;
+    border-radius:7px;
+    background:transparent;
+    border:none;
+    color:var(--text-dim);
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+  }
+  .lang-toggle button.active{background:var(--bg-panel-alt);color:var(--accent-cyan);}
+
+  /* ===== Main content ===== */
+  .main{
+    flex:1;
+    padding:3rem 3.2rem;
+    min-width:0;
+  }
+
+  .section{display:none;animation:fadein .4s ease;}
+  .section.active{display:block;}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .section-head{margin-bottom:2.2rem;}
+  .section-head h2{font-size:1.9rem;margin-top:0.4rem;}
+
+  .about-text{
+    color:var(--text-dim);
+    font-size:1rem;
+    max-width:62ch;
+    margin-bottom:2.6rem;
+  }
+  .about-text strong{color:var(--text-primary);font-weight:600;}
+
+  h3.subhead{
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--text-faint);
+    margin-bottom:1.2rem;
+  }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+    gap:1rem;
+    margin-bottom:2.8rem;
+  }
+  .service-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:1.4rem;
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .service-card:hover{border-color:var(--accent-cyan);transform:translateY(-3px);}
+  .service-card .ic{
+    width:38px;height:38px;border-radius:10px;
+    background:var(--bg-panel-alt);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--accent-violet);
+    margin-bottom:0.9rem;
+  }
+  .service-card .ic svg{width:19px;height:19px;}
+  .service-card h4{font-size:0.98rem;margin-bottom:0.5rem;}
+  .service-card p{font-size:0.84rem;color:var(--text-dim);}
+
+  .testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;}
+  .testimonial{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.3rem;
+  }
+  .testimonial p{font-size:0.85rem;color:var(--text-dim);margin-bottom:0.9rem;}
+  .testimonial .who{display:flex;align-items:center;gap:0.6rem;}
+  .testimonial .who .dot{width:32px;height:32px;border-radius:50%;background:var(--bg-panel-alt);border:1px solid var(--border);font-family:var(--font-mono);font-size:0.7rem;display:flex;align-items:center;justify-content:center;color:var(--accent-cyan);}
+  .testimonial .who span{font-size:0.82rem;font-weight:600;}
+
+  /* Resume timeline */
+  .timeline{display:flex;flex-direction:column;gap:0;margin-bottom:2.6rem;}
+  .timeline-item{
+    position:relative;
+    padding:0 0 1.8rem 1.6rem;
+    border-left:1px solid var(--border);
+  }
+  .timeline-item:last-child{border-color:transparent;}
+  .timeline-item::before{
+    content:'';
+    position:absolute;left:-5px;top:2px;
+    width:9px;height:9px;border-radius:50%;
+    background:var(--accent-cyan);
+    box-shadow:0 0 0 4px rgba(79,214,200,0.12);
+  }
+  .timeline-item .period{
+    font-family:var(--font-mono);
+    font-size:0.72rem;color:var(--accent-violet);
+    letter-spacing:0.04em;
+  }
+  .timeline-item h4{font-size:1rem;margin:0.3rem 0 0.15rem;}
+  .timeline-item .org{font-size:0.82rem;color:var(--text-faint);margin-bottom:0.5rem;}
+  .timeline-item p{font-size:0.85rem;color:var(--text-dim);max-width:60ch;}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.1rem 2rem;}
+  .skill-row .top{display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.4rem;}
+  .skill-row .top .val{font-family:var(--font-mono);color:var(--accent-cyan);font-size:0.76rem;}
+  .skill-bar{height:6px;border-radius:4px;background:var(--bg-card);border:1px solid var(--border);overflow:hidden;}
+  .skill-bar span{
+    display:block;height:100%;
+    background:linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+    border-radius:4px;
+    transition:width 1s ease;
+  }
+
+  /* Portfolio */
+  .filters{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.8rem;}
+  .filters button{
+    padding:0.45rem 0.95rem;
+    border-radius:20px;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-size:0.8rem;
+    transition:all .2s ease;
+  }
+  .filters button:hover{color:var(--text-primary);}
+  .filters button.active{background:var(--accent-cyan);color:#0a0e17;border-color:var(--accent-cyan);font-weight:600;}
+
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem;}
+  .project-card{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;
+    transition:transform .25s ease, border-color .25s ease;
+    display:flex;flex-direction:column;
+  }
+  .project-card:hover{transform:translateY(-4px);border-color:var(--accent-violet);}
+  .project-thumb{
+    height:130px;
+    background:linear-gradient(135deg, var(--bg-panel-alt), var(--bg-void));
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-faint);
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.05em;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .project-body{padding:1.1rem 1.2rem 1.3rem;}
+  .project-tag{
+    font-family:var(--font-mono);font-size:0.65rem;text-transform:uppercase;
+    color:var(--accent-cyan);letter-spacing:0.06em;margin-bottom:0.4rem;display:inline-block;
+  }
+  .project-body h4{font-size:0.98rem;margin-bottom:0.4rem;}
+  .project-body p{font-size:0.82rem;color:var(--text-dim);margin-bottom:0.8rem;}
+  .project-link{font-size:0.78rem;color:var(--accent-violet);display:inline-flex;align-items:center;gap:0.3rem;}
+  .project-link svg{width:12px;height:12px;}
+
+  /* Contact */
+  .contact-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:2.4rem;}
+  .contact-info-card{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:1.6rem;display:flex;flex-direction:column;gap:1.2rem;height:fit-content;
+  }
+  form.contact-form{display:flex;flex-direction:column;gap:1rem;}
+  .form-row{display:flex;gap:1rem;}
+  .field{flex:1;display:flex;flex-direction:column;gap:0.4rem;}
+  .field label{font-size:0.76rem;color:var(--text-faint);font-family:var(--font-mono);}
+  .field input, .field textarea{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:0.7rem 0.9rem;
+    color:var(--text-primary);
+    font-size:0.88rem;
+    resize:vertical;
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--accent-cyan);outline:none;}
+  .send-btn{
+    align-self:flex-start;
+    padding:0.75rem 1.6rem;
+    background:linear-gradient(90deg, var(--accent-cyan), var(--accent-violet));
+    color:#0a0e17;
+    border:none;border-radius:9px;
+    font-weight:600;font-size:0.88rem;
+    transition:opacity .2s ease;
+  }
+  .send-btn:hover{opacity:0.88;}
+  .form-note{font-size:0.76rem;color:var(--text-faint);margin-top:0.4rem;display:none;}
+  .form-note.show{display:block;color:var(--accent-cyan);}
+
+  /* Mobile nav */
+  .mobile-bar{display:none;}
+
+  @media (max-width:960px){
+    .app{flex-direction:column;}
+    .sidebar{
+      position:relative;height:auto;width:100%;
+      border-right:none;border-bottom:1px solid var(--border-soft);
+      padding:1.4rem;
+    }
+    .main{padding:2rem 1.4rem;}
+    .contact-wrap{grid-template-columns:1fr;}
+    .nav-tabs{flex-direction:row;overflow-x:auto;}
+    .nav-tabs button{white-space:nowrap;}
+    .lang-toggle{margin-top:1rem;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <div class="profile-card">
+      <svg class="pipeline-bg" viewBox="0 0 220 220">
+        <line class="pulse" x1="20" y1="110" x2="200" y2="110"/>
+        <line class="pulse" x1="60" y1="30" x2="60" y2="190" style="animation-delay:-1.2s"/>
+        <line class="pulse" x1="160" y1="30" x2="160" y2="190" style="animation-delay:-2.4s"/>
+        <circle class="node" cx="20" cy="110" r="3.5"/>
+        <circle class="node" cx="60" cy="30" r="3"/>
+        <circle class="node" cx="60" cy="190" r="3"/>
+        <circle class="node" cx="160" cy="30" r="3"/>
+        <circle class="node" cx="160" cy="190" r="3"/>
+        <circle class="node" cx="200" cy="110" r="3.5"/>
+      </svg>
+      <div class="avatar">NB</div>
+      <h1 class="profile-name" data-i18n="profileName">Votre Nom</h1>
+      <p class="profile-title">
+        <span data-i18n="titleLine1">Ingénieure Big Data</span>
+        <span class="sep"> · </span>
+        <span data-i18n="titleLine2">Développeuse</span>
+      </p>
+
+      <button class="btn-contacts" id="contactsToggle">
+        <span data-i18n="showContacts">Voir les contacts</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <div class="contacts-panel" id="contactsPanel">
+        <div class="contacts-list">
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+            <div>
+              <div class="contact-label" data-i18n="labelEmail">Email</div>
+              <div class="contact-value">votre.email@example.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.67 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.85.54 2.81.67A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div>
+              <div class="contact-label" data-i18n="labelPhone">Téléphone</div>
+              <div class="contact-value">+213 000 00 00 00</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/></svg></span>
+            <div>
+              <div class="contact-label" data-i18n="labelLocation">Localisation</div>
+              <div class="contact-value" data-i18n="locationValue">Annaba, Algérie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="socials">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+        <a href="#" aria-label="Kaggle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v16M4 13l8-6M4 13l8 7M12 13l8-6M12 13l8 7"/></svg></a>
+        <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <nav class="nav-tabs" id="navTabs">
+      <button data-tab="about" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+        <span data-i18n="navAbout">À propos</span>
+      </button>
+      <button data-tab="resume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M15 2v5h5"/><path d="M9 13h6M9 17h6"/></svg>
+        <span data-i18n="navResume">Parcours</span>
+      </button>
+      <button data-tab="portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span data-i18n="navPortfolio">Projets</span>
+      </button>
+      <button data-tab="contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+        <span data-i18n="navContact">Contact</span>
+      </button>
+    </nav>
+
+    <div class="lang-toggle">
+      <button id="langFR" class="active">FR</button>
+      <button id="langEN">EN</button>
+    </div>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ABOUT -->
+    <section class="section active" id="about">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="eyebrowAbout">Présentation</span>
+        <h2 data-i18n="aboutTitle">À propos de moi</h2>
+      </div>
+      <p class="about-text" data-i18n="aboutText">
+        Bonjour ! Je suis ingénieure Big Data, passionnée par la construction de pipelines de données
+        fiables et de systèmes distribués capables de faire passer des données brutes à des décisions
+        concrètes. J'aime concevoir des architectures data claires, automatiser les flux ETL/ELT et
+        transformer des volumes massifs de données en informations exploitables. Remplacez ce texte
+        par votre propre présentation.
+      </p>
+
+      <h3 class="subhead" data-i18n="whatIDo">Ce que je fais</h3>
+      <div class="card-grid">
+        <div class="service-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <h4 data-i18n="svc1Title">Pipelines de données</h4>
+          <p data-i18n="svc1Text">Conception et automatisation de pipelines ETL/ELT robustes, du batch au streaming temps réel.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+          <h4 data-i18n="svc2Title">Architecture Big Data</h4>
+          <p data-i18n="svc2Text">Data lakes, entrepôts de données et systèmes distribués pensés pour la fiabilité et l'échelle.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h10l4 4v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M8 12h8M8 16h5"/></svg></div>
+          <h4 data-i18n="svc3Title">Cloud & Infrastructure</h4>
+          <p data-i18n="svc3Text">Déploiement de traitements de données sur le cloud avec Docker, Kubernetes et l'infra as code.</p>
+        </div>
+        <div class="service-card">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-6 4 3 5-8"/></svg></div>
+          <h4 data-i18n="svc4Title">Analyse & Visualisation</h4>
+          <p data-i18n="svc4Text">Dashboards et rapports qui transforment des données complexes en décisions claires.</p>
+        </div>
+      </div>
+
+      <h3 class="subhead" data-i18n="testimonialsTitle">Témoignages</h3>
+      <div class="testimonials">
+        <div class="testimonial">
+          <p data-i18n="t1Text">« Une rigueur et une clarté remarquables dans la construction de nos pipelines de données. »</p>
+          <div class="who"><span class="dot">A.K</span><span>Product Manager</span></div>
+        </div>
+        <div class="testimonial">
+          <p data-i18n="t2Text">« A transformé nos données éparpillées en un entrepôt de données fiable et bien documenté. »</p>
+          <div class="who"><span class="dot">S.M</span><span>CTO, Startup</span></div>
+        </div>
+        <div class="testimonial">
+          <p data-i18n="t3Text">« Très professionnelle, communication claire et livrables toujours dans les temps. »</p>
+          <div class="who"><span class="dot">L.B</span><span>Lead Data</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="section" id="resume">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="eyebrowResume">Parcours</span>
+        <h2 data-i18n="resumeTitle">Mon parcours</h2>
+      </div>
+
+      <h3 class="subhead" data-i18n="educationTitle">Formation</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="period">2024 — 2026</div>
+          <h4 data-i18n="edu1Title">Master en Ingénierie Big Data</h4>
+          <div class="org" data-i18n="edu1Org">Nom de l'université</div>
+          <p data-i18n="edu1Text">Architecture de données, systèmes distribués, machine learning à grande échelle et technologies cloud.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="period">2021 — 2024</div>
+          <h4 data-i18n="edu2Title">Licence en Informatique</h4>
+          <div class="org" data-i18n="edu2Org">Nom de l'université</div>
+          <p data-i18n="edu2Text">Fondamentaux en programmation, structures de données, algorithmes et bases de données.</p>
+        </div>
+      </div>
+
+      <h3 class="subhead" data-i18n="experienceTitle">Expérience</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="period" data-i18n="exp1Period">2025 — Présent</div>
+          <h4 data-i18n="exp1Title">Ingénieure Big Data</h4>
+          <div class="org" data-i18n="exp1Org">Nom de l'entreprise, Télétravail</div>
+          <p data-i18n="exp1Text">Conception de pipelines de données à grande échelle avec Spark et Kafka, orchestration avec Airflow.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="period" data-i18n="exp2Period">2024 — 2025</div>
+          <h4 data-i18n="exp2Title">Data Analyst</h4>
+          <div class="org" data-i18n="exp2Org">Nom de l'entreprise, Freelance</div>
+          <p data-i18n="exp2Text">Analyse de données avec Python et R, création de tableaux de bord Power BI pour l'aide à la décision.</p>
+        </div>
+        <div class="timeline-item">
+          <div class="period" data-i18n="exp3Period">2023 — 2024</div>
+          <h4 data-i18n="exp3Title">Développeuse Backend</h4>
+          <div class="org" data-i18n="exp3Org">Nom de l'entreprise, Freelance</div>
+          <p data-i18n="exp3Text">Développement d'APIs et de services backend pour des applications web et mobiles.</p>
+        </div>
+      </div>
+
+      <h3 class="subhead" data-i18n="skillsTitle">Compétences</h3>
+      <div class="skills-grid">
+        <div class="skill-row"><div class="top"><span>Python</span><span class="val">90%</span></div><div class="skill-bar"><span style="width:90%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>SQL</span><span class="val">92%</span></div><div class="skill-bar"><span style="width:92%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Apache Spark</span><span class="val">85%</span></div><div class="skill-bar"><span style="width:85%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Apache Kafka</span><span class="val">78%</span></div><div class="skill-bar"><span style="width:78%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Airflow</span><span class="val">80%</span></div><div class="skill-bar"><span style="width:80%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Hadoop</span><span class="val">75%</span></div><div class="skill-bar"><span style="width:75%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>AWS (S3, EMR, Glue)</span><span class="val">80%</span></div><div class="skill-bar"><span style="width:80%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Docker & Kubernetes</span><span class="val">76%</span></div><div class="skill-bar"><span style="width:76%"></span></div></div>
+        <div class="skill-row"><div class="top"><span>Power BI</span><span class="val">85%</span></div><div class="skill-bar"><span style="width:85%"></span></div></div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="section" id="portfolio">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="eyebrowPortfolio">Réalisations</span>
+        <h2 data-i18n="portfolioTitle">Mes projets</h2>
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="active" data-filter="all" data-i18n="filterAll">Tous</button>
+        <button data-filter="pipeline" data-i18n="filterPipeline">Pipelines de données</button>
+        <button data-filter="analytics" data-i18n="filterAnalytics">Analytics</button>
+        <button data-filter="cloud" data-i18n="filterCloud">Cloud</button>
+        <button data-filter="web" data-i18n="filterWeb">Web</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+        <article class="project-card" data-category="pipeline">
+          <div class="project-thumb">project_01.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p1Tag">Pipeline de données</span>
+            <h4 data-i18n="p1Title">Pipeline ETL temps réel</h4>
+            <p data-i18n="p1Text">Ingestion de données en streaming avec Kafka et Spark Structured Streaming.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+        <article class="project-card" data-category="cloud">
+          <div class="project-thumb">project_02.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p2Tag">Cloud</span>
+            <h4 data-i18n="p2Title">Migration Data Warehouse</h4>
+            <p data-i18n="p2Text">Migration d'un entrepôt de données on-premise vers une architecture cloud sur AWS.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+        <article class="project-card" data-category="analytics">
+          <div class="project-thumb">project_03.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p3Tag">Analytics</span>
+            <h4 data-i18n="p3Title">Dashboard de suivi métier</h4>
+            <p data-i18n="p3Text">Tableau de bord Power BI connecté à un entrepôt de données pour le suivi des KPIs.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+        <article class="project-card" data-category="pipeline">
+          <div class="project-thumb">project_04.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p4Tag">Pipeline de données</span>
+            <h4 data-i18n="p4Title">Orchestration Airflow</h4>
+            <p data-i18n="p4Text">Automatisation de workflows de données complexes avec Apache Airflow.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+        <article class="project-card" data-category="web">
+          <div class="project-thumb">project_05.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p5Tag">Web</span>
+            <h4 data-i18n="p5Title">API de données backend</h4>
+            <p data-i18n="p5Text">API REST pour exposer des données transformées à des applications clientes.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+        <article class="project-card" data-category="analytics">
+          <div class="project-thumb">project_06.svg</div>
+          <div class="project-body">
+            <span class="project-tag" data-i18n="p6Tag">Analytics</span>
+            <h4 data-i18n="p6Title">Analyse exploratoire de données</h4>
+            <p data-i18n="p6Text">Analyse Python (Pandas, Seaborn) sur un jeu de données public, publié sur Kaggle.</p>
+            <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-head">
+        <span class="eyebrow" data-i18n="eyebrowContact">Contact</span>
+        <h2 data-i18n="contactTitle">Discutons de votre projet</h2>
+      </div>
+
+      <div class="contact-wrap">
+        <div class="contact-info-card">
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+            <div><div class="contact-label" data-i18n="labelEmail">Email</div><div class="contact-value">votre.email@example.com</div></div>
+          </div>
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.67 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.85.54 2.81.67A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><div class="contact-label" data-i18n="labelPhone">Téléphone</div><div class="contact-value">+213 000 00 00 00</div></div>
+          </div>
+          <div class="contact-item">
+            <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/></svg></span>
+            <div><div class="contact-label" data-i18n="labelLocation">Localisation</div><div class="contact-value" data-i18n="locationValue">Annaba, Algérie</div></div>
+          </div>
+          <hr class="divider">
+          <p style="font-size:0.82rem;color:var(--text-dim);" data-i18n="contactNote">Disponible pour des missions freelance ou des opportunités en ingénierie de données.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label data-i18n="labelName">Nom</label>
+              <input type="text" required data-i18n-placeholder="phName" placeholder="Votre nom">
+            </div>
+            <div class="field">
+              <label data-i18n="labelEmailForm">Email</label>
+              <input type="email" required data-i18n-placeholder="phEmail" placeholder="vous@example.com">
+            </div>
+          </div>
+          <div class="field">
+            <label data-i18n="labelSubject">Sujet</label>
+            <input type="text" data-i18n-placeholder="phSubject" placeholder="Objet du message">
+          </div>
+          <div class="field">
+            <label data-i18n="labelMessage">Message</label>
+            <textarea rows="5" required data-i18n-placeholder="phMessage" placeholder="Votre message..."></textarea>
+          </div>
+          <button type="submit" class="send-btn" data-i18n="sendMessage">Envoyer le message</button>
+          <p class="form-note" id="formNote" data-i18n="formNoteText">Message envoyé — merci, je reviens vers vous rapidement !</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// ---- i18n dictionary ----
+const dict = {
+  fr: {
+    profileName:"Votre Nom", titleLine1:"Ingénieure Big Data", titleLine2:"Développeuse",
+    showContacts:"Voir les contacts", labelEmail:"Email", labelPhone:"Téléphone", labelLocation:"Localisation",
+    locationValue:"Annaba, Algérie",
+    navAbout:"À propos", navResume:"Parcours", navPortfolio:"Projets", navContact:"Contact",
+    eyebrowAbout:"Présentation", aboutTitle:"À propos de moi",
+    aboutText:"Bonjour ! Je suis ingénieure Big Data, passionnée par la construction de pipelines de données fiables et de systèmes distribués capables de faire passer des données brutes à des décisions concrètes. J'aime concevoir des architectures data claires, automatiser les flux ETL/ELT et transformer des volumes massifs de données en informations exploitables. Remplacez ce texte par votre propre présentation.",
+    whatIDo:"Ce que je fais",
+    svc1Title:"Pipelines de données", svc1Text:"Conception et automatisation de pipelines ETL/ELT robustes, du batch au streaming temps réel.",
+    svc2Title:"Architecture Big Data", svc2Text:"Data lakes, entrepôts de données et systèmes distribués pensés pour la fiabilité et l'échelle.",
+    svc3Title:"Cloud & Infrastructure", svc3Text:"Déploiement de traitements de données sur le cloud avec Docker, Kubernetes et l'infra as code.",
+    svc4Title:"Analyse & Visualisation", svc4Text:"Dashboards et rapports qui transforment des données complexes en décisions claires.",
+    testimonialsTitle:"Témoignages",
+    t1Text:"« Une rigueur et une clarté remarquables dans la construction de nos pipelines de données. »",
+    t2Text:"« A transformé nos données éparpillées en un entrepôt de données fiable et bien documenté. »",
+    t3Text:"« Très professionnelle, communication claire et livrables toujours dans les temps. »",
+    eyebrowResume:"Parcours", resumeTitle:"Mon parcours",
+    educationTitle:"Formation",
+    edu1Title:"Master en Ingénierie Big Data", edu1Org:"Nom de l'université", edu1Text:"Architecture de données, systèmes distribués, machine learning à grande échelle et technologies cloud.",
+    edu2Title:"Licence en Informatique", edu2Org:"Nom de l'université", edu2Text:"Fondamentaux en programmation, structures de données, algorithmes et bases de données.",
+    experienceTitle:"Expérience",
+    exp1Period:"2025 — Présent", exp1Title:"Ingénieure Big Data", exp1Org:"Nom de l'entreprise, Télétravail", exp1Text:"Conception de pipelines de données à grande échelle avec Spark et Kafka, orchestration avec Airflow.",
+    exp2Period:"2024 — 2025", exp2Title:"Data Analyst", exp2Org:"Nom de l'entreprise, Freelance", exp2Text:"Analyse de données avec Python et R, création de tableaux de bord Power BI pour l'aide à la décision.",
+    exp3Period:"2023 — 2024", exp3Title:"Développeuse Backend", exp3Org:"Nom de l'entreprise, Freelance", exp3Text:"Développement d'APIs et de services backend pour des applications web et mobiles.",
+    skillsTitle:"Compétences",
+    eyebrowPortfolio:"Réalisations", portfolioTitle:"Mes projets",
+    filterAll:"Tous", filterPipeline:"Pipelines de données", filterAnalytics:"Analytics", filterCloud:"Cloud", filterWeb:"Web",
+    p1Tag:"Pipeline de données", p1Title:"Pipeline ETL temps réel", p1Text:"Ingestion de données en streaming avec Kafka et Spark Structured Streaming.",
+    p2Tag:"Cloud", p2Title:"Migration Data Warehouse", p2Text:"Migration d'un entrepôt de données on-premise vers une architecture cloud sur AWS.",
+    p3Tag:"Analytics", p3Title:"Dashboard de suivi métier", p3Text:"Tableau de bord Power BI connecté à un entrepôt de données pour le suivi des KPIs.",
+    p4Tag:"Pipeline de données", p4Title:"Orchestration Airflow", p4Text:"Automatisation de workflows de données complexes avec Apache Airflow.",
+    p5Tag:"Web", p5Title:"API de données backend", p5Text:"API REST pour exposer des données transformées à des applications clientes.",
+    p6Tag:"Analytics", p6Title:"Analyse exploratoire de données", p6Text:"Analyse Python (Pandas, Seaborn) sur un jeu de données public, publié sur Kaggle.",
+    viewProject:"Voir le projet",
+    eyebrowContact:"Contact", contactTitle:"Discutons de votre projet",
+    contactNote:"Disponible pour des missions freelance ou des opportunités en ingénierie de données.",
+    labelName:"Nom", labelEmailForm:"Email", labelSubject:"Sujet", labelMessage:"Message",
+    phName:"Votre nom", phEmail:"vous@example.com", phSubject:"Objet du message", phMessage:"Votre message...",
+    sendMessage:"Envoyer le message", formNoteText:"Message envoyé — merci, je reviens vers vous rapidement !"
+  },
+  en: {
+    profileName:"Your Name", titleLine1:"Big Data Engineer", titleLine2:"Developer",
+    showContacts:"Show contacts", labelEmail:"Email", labelPhone:"Phone", labelLocation:"Location",
+    locationValue:"Annaba, Algeria",
+    navAbout:"About", navResume:"Resume", navPortfolio:"Portfolio", navContact:"Contact",
+    eyebrowAbout:"Introduction", aboutTitle:"About me",
+    aboutText:"Hi there! I'm a Big Data Engineer passionate about building reliable data pipelines and distributed systems that turn raw data into real decisions. I enjoy designing clear data architectures, automating ETL/ELT flows, and transforming massive volumes of data into actionable insight. Replace this text with your own introduction.",
+    whatIDo:"What I'm doing",
+    svc1Title:"Data pipelines", svc1Text:"Designing and automating robust ETL/ELT pipelines, from batch to real-time streaming.",
+    svc2Title:"Big Data architecture", svc2Text:"Data lakes, warehouses and distributed systems built for reliability and scale.",
+    svc3Title:"Cloud & Infrastructure", svc3Text:"Deploying data workloads to the cloud with Docker, Kubernetes and infra as code.",
+    svc4Title:"Analytics & Visualization", svc4Text:"Dashboards and reports that turn complex data into clear decisions.",
+    testimonialsTitle:"Testimonials",
+    t1Text:"“Remarkable rigor and clarity building out our data pipelines.”",
+    t2Text:"“Turned our scattered data into a reliable, well-documented data warehouse.”",
+    t3Text:"“Very professional, clear communication and always on-time deliverables.”",
+    eyebrowResume:"Resume", resumeTitle:"My resume",
+    educationTitle:"Education",
+    edu1Title:"Master's in Big Data Engineering", edu1Org:"University name", edu1Text:"Data architecture, distributed systems, large-scale machine learning and cloud technologies.",
+    edu2Title:"Bachelor's in Computer Science", edu2Org:"University name", edu2Text:"Programming fundamentals, data structures, algorithms and databases.",
+    experienceTitle:"Experience",
+    exp1Period:"2025 — Present", exp1Title:"Big Data Engineer", exp1Org:"Company name, Remote", exp1Text:"Designing large-scale data pipelines with Spark and Kafka, orchestrated with Airflow.",
+    exp2Period:"2024 — 2025", exp2Title:"Data Analyst", exp2Org:"Company name, Freelance", exp2Text:"Data analysis with Python and R, building Power BI dashboards for decision-making.",
+    exp3Period:"2023 — 2024", exp3Title:"Backend Developer", exp3Org:"Company name, Freelance", exp3Text:"Building APIs and backend services for web and mobile applications.",
+    skillsTitle:"Skills",
+    eyebrowPortfolio:"Work", portfolioTitle:"My projects",
+    filterAll:"All", filterPipeline:"Data pipelines", filterAnalytics:"Analytics", filterCloud:"Cloud", filterWeb:"Web",
+    p1Tag:"Data pipeline", p1Title:"Real-time ETL pipeline", p1Text:"Streaming data ingestion with Kafka and Spark Structured Streaming.",
+    p2Tag:"Cloud", p2Title:"Data warehouse migration", p2Text:"Migrating an on-premise data warehouse to a cloud architecture on AWS.",
+    p3Tag:"Analytics", p3Title:"Business tracking dashboard", p3Text:"Power BI dashboard connected to a data warehouse for KPI tracking.",
+    p4Tag:"Data pipeline", p4Title:"Airflow orchestration", p4Text:"Automating complex data workflows with Apache Airflow.",
+    p5Tag:"Web", p5Title:"Backend data API", p5Text:"REST API exposing transformed data to client applications.",
+    p6Tag:"Analytics", p6Title:"Exploratory data analysis", p6Text:"Python analysis (Pandas, Seaborn) on a public dataset, published on Kaggle.",
+    viewProject:"View project",
+    eyebrowContact:"Contact", contactTitle:"Let's talk about your project",
+    contactNote:"Available for freelance work or data engineering opportunities.",
+    labelName:"Name", labelEmailForm:"Email", labelSubject:"Subject", labelMessage:"Message",
+    phName:"Your name", phEmail:"you@example.com", phSubject:"Subject", phMessage:"Your message...",
+    sendMessage:"Send message", formNoteText:"Message sent — thanks, I'll get back to you soon!"
+  }
+};
+
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  const d = dict[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(d[key] !== undefined) el.textContent = d[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(d[key] !== undefined) el.setAttribute('placeholder', d[key]);
+  });
+  document.getElementById('langFR').classList.toggle('active', lang==='fr');
+  document.getElementById('langEN').classList.toggle('active', lang==='en');
+}
+
+document.getElementById('langFR').addEventListener('click', ()=>applyLang('fr'));
+document.getElementById('langEN').addEventListener('click', ()=>applyLang('en'));
+
+// ---- tabs ----
+document.getElementById('navTabs').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#navTabs button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(btn.dataset.tab).classList.add('active');
+});
+
+// ---- contacts toggle ----
+const contactsToggle = document.getElementById('contactsToggle');
+const contactsPanel = document.getElementById('contactsPanel');
+contactsToggle.addEventListener('click', ()=>{
+  contactsToggle.classList.toggle('open');
+  contactsPanel.classList.toggle('open');
+});
+
+// ---- portfolio filters ----
+document.getElementById('filters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.style.display = (filter==='all' || card.dataset.category===filter) ? '' : 'none';
+  });
+});
+
+// ---- contact form (no backend — placeholder confirmation) ----
+document.getElementById('contactForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('formNote').classList.add('show');
+  e.target.reset();
+});
+</script>
+</body>
+</html>

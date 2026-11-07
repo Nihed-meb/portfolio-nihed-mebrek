@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nihed Mebrek — Big Data Engineer & Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0d13;
+    --panel:#10141c;
+    --elevated:#161b25;
+    --border:#232a38;
+    --border-soft:#1a202c;
+    --text:#dde3ee;
+    --text-dim:#8b93a7;
+    --text-faint:#565f74;
+    --kw:#6fa8dc;      /* keyword blue */
+    --str:#e3ad63;     /* string amber */
+    --type:#c98bd1;    /* type/purple */
+    --tag:#d17b88;     /* rose tag */
+    --ok:#6fbf8b;       /* success green, muted */
+    --font-mono:'JetBrains Mono', monospace;
+    --font-body:'Inter', sans-serif;
+    --gutter-w:46px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;color:inherit;}
+  input,textarea{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--kw);outline-offset:2px;}
+
+  .editor{
+    max-width:1180px;
+    margin:2.2rem auto;
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 40px 80px -40px rgba(0,0,0,0.6);
+  }
+
+  /* ===== Title bar ===== */
+  .titlebar{
+    background:var(--elevated);
+    border-bottom:1px solid var(--border);
+    padding:0.7rem 1rem;
+    display:flex;align-items:center;gap:0.9rem;
+  }
+  .dots{display:flex;gap:6px;}
+  .dots span{width:11px;height:11px;border-radius:50%;}
+  .dots span:nth-child(1){background:#e6685b;}
+  .dots span:nth-child(2){background:#e3b341;}
+  .dots span:nth-child(3){background:#5cb85c;}
+  .titlebar-name{
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    color:var(--text-faint);
+    flex:1;
+    text-align:center;
+  }
+  .lang-toggle{display:flex;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .lang-toggle button{
+    padding:0.3rem 0.6rem;font-family:var(--font-mono);font-size:0.7rem;color:var(--text-faint);
+  }
+  .lang-toggle button.active{background:var(--border);color:var(--text);}
+
+  /* ===== Tab bar (nav) ===== */
+  .tabbar{
+    display:flex;
+    background:var(--panel);
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+  }
+  .tabbar button{
+    font-family:var(--font-mono);
+    font-size:0.8rem;
+    color:var(--text-faint);
+    padding:0.8rem 1.3rem;
+    display:flex;align-items:center;gap:0.5rem;
+    border-right:1px solid var(--border-soft);
+    white-space:nowrap;
+    position:relative;
+  }
+  .tabbar button .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+  .tabbar button.active{
+    color:var(--text);
+    background:var(--bg);
+  }
+  .tabbar button.active::after{
+    content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--kw);
+  }
+  .tabbar button:hover{color:var(--text);}
+
+  /* ===== Body / editor content ===== */
+  .editor-body{background:var(--bg);}
+  .pane{display:none;}
+  .pane.active{display:block;animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0;}to{opacity:1;}}
+
+  .code-block{
+    display:flex;
+    font-family:var(--font-mono);
+    font-size:0.86rem;
+  }
+  .gutter{
+    width:var(--gutter-w);
+    flex-shrink:0;
+    padding:1.8rem 0;
+    text-align:right;
+    color:#3a4256;
+    background:var(--panel);
+    border-right:1px solid var(--border-soft);
+    user-select:none;
+  }
+  .gutter div{padding:0 0.9rem;line-height:1.9rem;}
+  .code-content{padding:1.8rem 2.2rem;flex:1;min-width:0;}
+  .code-content .ln{line-height:1.9rem;white-space:pre-wrap;}
+  .cm{color:var(--text-faint);font-style:italic;}
+  .kw{color:var(--kw);}
+  .str{color:var(--str);}
+  .typ{color:var(--type);}
+  .fn{color:#79c0d0;}
+  .prop{color:#a5c8e4;}
+
+  .prose-section{padding:2.4rem 2.6rem 3rem;}
+  .prose-section .eyebrow{
+    font-family:var(--font-mono);font-size:0.72rem;color:var(--text-faint);
+    display:block;margin-bottom:0.4rem;
+  }
+  .prose-section .eyebrow .cm{color:var(--text-faint);}
+  .prose-section h2{
+    font-family:var(--font-mono);font-size:1.5rem;color:var(--text);font-weight:600;
+    margin-bottom:1.6rem;
+  }
+  .prose-section h2 .kw{font-weight:600;}
+
+  /* ===== About: capability list styled like methods ===== */
+  .methods{border-top:1px solid var(--border-soft);}
+  .method-row{
+    display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;
+    padding:1.1rem 0;border-bottom:1px solid var(--border-soft);
+  }
+  .method-sig{font-family:var(--font-mono);font-size:0.88rem;}
+  .method-sig .fn{font-weight:600;}
+  .method-desc{color:var(--text-dim);font-size:0.88rem;margin-top:0.4rem;max-width:60ch;}
+  .method-lang{
+    font-family:var(--font-mono);font-size:0.68rem;color:var(--text-faint);
+    padding:0.25rem 0.6rem;border:1px solid var(--border);border-radius:4px;height:fit-content;
+  }
+
+  /* ===== Resume: git-log style ===== */
+  .track-label{
+    font-family:var(--font-mono);font-size:0.74rem;color:var(--text-faint);
+    text-transform:uppercase;letter-spacing:0.06em;
+    margin:2rem 0 1rem;
+    padding-bottom:0.6rem;border-bottom:1px solid var(--border-soft);
+  }
+  .track-label:first-child{margin-top:0;}
+  .commit{
+    display:grid;grid-template-columns:16px 1fr;gap:1rem;
+    padding-bottom:1.6rem;position:relative;
+  }
+  .commit::before{
+    content:'';position:absolute;left:7px;top:18px;bottom:0;width:1px;background:var(--border);
+  }
+  .commit:last-child::before{display:none;}
+  .commit-node{width:16px;height:16px;border-radius:50%;background:var(--elevated);border:2px solid var(--kw);margin-top:2px;z-index:1;}
+  .commit-hash{font-family:var(--font-mono);font-size:0.72rem;color:var(--str);}
+  .commit-title{font-family:var(--font-mono);font-size:0.98rem;color:var(--text);margin:0.3rem 0 0.2rem;font-weight:600;}
+  .commit-meta{font-size:0.8rem;color:var(--text-faint);margin-bottom:0.5rem;}
+  .commit-body{color:var(--text-dim);font-size:0.87rem;max-width:64ch;}
+
+  /* ===== Skills object ===== */
+  .skills-obj{margin-top:0.5rem;}
+  .skills-obj .brace{color:var(--text-faint);font-family:var(--font-mono);}
+  .skill-line{
+    font-family:var(--font-mono);font-size:0.86rem;
+    display:flex;align-items:center;gap:0.8rem;padding:0.35rem 0 0.35rem 1.4rem;
+  }
+  .skill-line .key{color:var(--prop);min-width:150px;}
+  .skill-line .bar-track{flex:1;height:5px;background:var(--border-soft);border-radius:3px;overflow:hidden;max-width:220px;}
+  .skill-line .bar-fill{display:block;height:100%;background:linear-gradient(90deg,var(--kw),var(--type));}
+  .skill-line .pct{color:var(--str);font-size:0.78rem;width:38px;}
+
+  /* ===== Projects grid ===== */
+  .projects-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.1rem;
+    margin-top:1.8rem;
+  }
+  .file-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:8px;
+    overflow:hidden;transition:border-color .2s ease,transform .2s ease;
+  }
+  .file-card:hover{border-color:var(--kw);transform:translateY(-3px);}
+  .file-head{
+    display:flex;align-items:center;gap:0.6rem;
+    padding:0.8rem 1rem;border-bottom:1px solid var(--border-soft);
+    font-family:var(--font-mono);font-size:0.76rem;color:var(--text-faint);
+  }
+  .file-head .lang-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .file-body{padding:1.1rem 1.2rem 1.3rem;}
+  .file-body h4{font-family:var(--font-mono);font-size:0.98rem;color:var(--text);margin-bottom:0.5rem;font-weight:600;}
+  .file-body p{font-size:0.85rem;color:var(--text-dim);margin-bottom:0.9rem;}
+  .file-link{
+    font-family:var(--font-mono);font-size:0.78rem;color:var(--kw);
+    display:inline-flex;align-items:center;gap:0.35rem;
+  }
+  .file-link svg{width:12px;height:12px;}
+
+  .filters{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.4rem;}
+  .filters button{
+    font-family:var(--font-mono);font-size:0.76rem;
+    padding:0.4rem 0.85rem;border:1px solid var(--border);border-radius:16px;color:var(--text-faint);
+    transition:all .2s ease;
+  }
+  .filters button:hover{color:var(--text);border-color:var(--kw);}
+  .filters button.active{background:var(--kw);border-color:var(--kw);color:var(--bg);font-weight:600;}
+
+  /* ===== Contact terminal ===== */
+  .terminal{
+    background:var(--panel);border:1px solid var(--border);border-radius:8px;
+    font-family:var(--font-mono);font-size:0.85rem;overflow:hidden;
+  }
+  .terminal-head{
+    padding:0.6rem 1rem;border-bottom:1px solid var(--border-soft);color:var(--text-faint);font-size:0.74rem;
+  }
+  .terminal-body{padding:1.2rem 1.4rem;}
+  .prompt-line{color:var(--text-dim);margin-bottom:1rem;}
+  .prompt-line .kw{color:var(--ok);}
+  .contact-info{display:flex;flex-direction:column;gap:0.9rem;margin-bottom:1.6rem;}
+  .contact-info .ci-row{display:flex;gap:0.7rem;font-size:0.84rem;}
+  .contact-info .ci-key{color:var(--prop);min-width:90px;}
+  .contact-info .ci-val{color:var(--str);}
+
+  form.contact-form{display:flex;flex-direction:column;gap:0.9rem;}
+  .form-row{display:flex;gap:0.9rem;}
+  .field{flex:1;display:flex;flex-direction:column;gap:0.4rem;}
+  .field label{font-family:var(--font-mono);font-size:0.74rem;color:var(--text-faint);}
+  .field label .kw{color:var(--kw);}
+  .field input,.field textarea{
+    background:var(--elevated);border:1px solid var(--border);border-radius:5px;
+    padding:0.65rem 0.85rem;color:var(--text);font-size:0.86rem;font-family:var(--font-body);resize:vertical;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--kw);outline:none;}
+  .send-btn{
+    align-self:flex-start;font-family:var(--font-mono);
+    padding:0.7rem 1.4rem;background:var(--kw);color:var(--bg);border-radius:5px;
+    font-weight:600;font-size:0.84rem;transition:opacity .2s ease;
+  }
+  .send-btn:hover{opacity:0.85;}
+  .form-note{font-family:var(--font-mono);font-size:0.78rem;color:var(--text-faint);display:none;margin-top:0.2rem;}
+  .form-note.show{display:block;color:var(--ok);}
+
+  /* ===== Status bar ===== */
+  .statusbar{
+    background:var(--kw);
+    color:var(--bg);
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    padding:0.4rem 1rem;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:0.5rem;
+  }
+  .statusbar .left,.statusbar .right{display:flex;gap:1.1rem;align-items:center;}
+  .statusbar .socials{display:flex;gap:0.7rem;}
+  .statusbar a{color:var(--bg);opacity:0.85;}
+  .statusbar a:hover{opacity:1;}
+  .statusbar svg{width:13px;height:13px;}
+
+  @media (max-width:760px){
+    .editor{margin:0;border-radius:0;border-left:none;border-right:none;}
+    .code-block{flex-direction:column;}
+    .gutter{display:none;}
+    .code-content{padding:1.4rem;}
+    .prose-section{padding:1.8rem 1.3rem 2.4rem;}
+    .form-row{flex-direction:column;}
+    .method-row{grid-template-columns:1fr;}
+    .commit-body{max-width:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="editor">
+  <!-- Title bar -->
+  <div class="titlebar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="titlebar-name">nihed-mebrek — portfolio</div>
+    <div class="lang-toggle">
+      <button id="langFR" class="active">FR</button>
+      <button id="langEN">EN</button>
+    </div>
+  </div>
+
+  <!-- Tab bar / nav -->
+  <div class="tabbar" id="tabbar">
+    <button data-tab="about" class="active"><span class="dot" style="background:var(--kw)"></span>about.ts</button>
+    <button data-tab="resume"><span class="dot" style="background:var(--str)"></span>resume.md</button>
+    <button data-tab="projects"><span class="dot" style="background:var(--type)"></span>projects.json</button>
+    <button data-tab="contact"><span class="dot" style="background:var(--ok)"></span>contact.sh</button>
+  </div>
+
+  <div class="editor-body">
+
+    <!-- ABOUT -->
+    <section class="pane active" id="about">
+      <div class="code-block">
+        <div class="gutter" id="gutterAbout"></div>
+        <div class="code-content" id="codeAbout"></div>
+      </div>
+      <div class="prose-section">
+        <span class="eyebrow"><span class="cm" data-i18n="aboutComment">// ce que je fais</span></span>
+        <h2><span class="kw">function</span> <span class="fn" data-i18n="aboutFn">capabilities</span>()</h2>
+        <div class="methods">
+          <div class="method-row">
+            <div>
+              <div class="method-sig"><span class="fn">.dataProcessing</span>()</div>
+              <div class="method-desc" data-i18n="m1Desc">Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception et gestion de bases SQL.</div>
+            </div>
+            <span class="method-lang">Python · SQL</span>
+          </div>
+          <div class="method-row">
+            <div>
+              <div class="method-sig"><span class="fn">.biDashboards</span>()</div>
+              <div class="method-desc" data-i18n="m2Desc">Création de tableaux de bord et de rapports avec Power BI et Excel pour l'aide à la décision.</div>
+            </div>
+            <span class="method-lang">Power BI</span>
+          </div>
+          <div class="method-row">
+            <div>
+              <div class="method-sig"><span class="fn">.webDevelopment</span>()</div>
+              <div class="method-desc" data-i18n="m3Desc">Applications web responsives avec Laravel, PHP, React, HTML/CSS/JavaScript, backend sécurisé.</div>
+            </div>
+            <span class="method-lang">Laravel · React</span>
+          </div>
+          <div class="method-row">
+            <div>
+              <div class="method-sig"><span class="fn">.wordpressCms</span>()</div>
+              <div class="method-desc" data-i18n="m4Desc">Sites professionnels avec WordPress, Elementor et Divi, optimisés vitesse, SEO et sécurité.</div>
+            </div>
+            <span class="method-lang">WordPress</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUME -->
+    <section class="pane" id="resume">
+      <div class="prose-section">
+        <span class="eyebrow"><span class="cm" data-i18n="resumeComment">// formation & expérience</span></span>
+        <h2 data-i18n="resumeTitle">Parcours</h2>
+
+        <div class="track-label" data-i18n="educationTitle">Formation</div>
+        <div class="commit">
+          <div class="commit-node"></div>
+          <div>
+            <div class="commit-hash">jan2024 → jan2026</div>
+            <div class="commit-title" data-i18n="edu1Title">Master en Gestion et Analyse du Big Data</div>
+            <div class="commit-meta" data-i18n="edu1Org">Université Badji Mokhtar, Annaba</div>
+            <div class="commit-body" data-i18n="edu1Text">Spécialisation en technologies Big Data et traitement de données. Mémoire : développement d'un projet orienté startup basé sur des solutions Big Data.</div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-node"></div>
+          <div>
+            <div class="commit-hash">2021 → 2024</div>
+            <div class="commit-title" data-i18n="edu2Title">Licence en Informatique</div>
+            <div class="commit-meta" data-i18n="edu2Org">Université Badji Mokhtar, Annaba</div>
+            <div class="commit-body" data-i18n="edu2Text">Projet de fin d'études : conception et développement d'une application web orientée startup.</div>
+          </div>
+        </div>
+
+        <div class="track-label" data-i18n="experienceTitle">Expérience</div>
+        <div class="commit">
+          <div class="commit-node" style="border-color:var(--str)"></div>
+          <div>
+            <div class="commit-hash">mars2026 → mai2026</div>
+            <div class="commit-title" data-i18n="exp0Title">Data Engineering Intern</div>
+            <div class="commit-meta" data-i18n="exp0Org">Société Nationale d'Assurance (SAA), Annaba</div>
+            <div class="commit-body" data-i18n="exp0Text">Stage en ingénierie de données au sein d'une compagnie d'assurance, contribution au traitement et à l'analyse de données.</div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-node" style="border-color:var(--str)"></div>
+          <div>
+            <div class="commit-hash">avr2025 → présent</div>
+            <div class="commit-title" data-i18n="exp1Title">Data Engineer (Freelance)</div>
+            <div class="commit-meta" data-i18n="exp1Org">Freelance, Annaba</div>
+            <div class="commit-body" data-i18n="exp1Text">Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception de bases SQL, dashboards Power BI et Excel.</div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-node" style="border-color:var(--str)"></div>
+          <div>
+            <div class="commit-hash">juin2024 → présent</div>
+            <div class="commit-title" data-i18n="exp2Title">WordPress Developer (Freelance)</div>
+            <div class="commit-meta" data-i18n="exp2Org">Freelance, Annaba</div>
+            <div class="commit-body" data-i18n="exp2Text">Sites professionnels avec WordPress, Elementor et Divi, personnalisation de thèmes, optimisation SEO, vitesse et sécurité.</div>
+          </div>
+        </div>
+        <div class="commit">
+          <div class="commit-node" style="border-color:var(--str)"></div>
+          <div>
+            <div class="commit-hash">fév2024 → présent</div>
+            <div class="commit-title" data-i18n="exp3Title">Web Developer (Freelance)</div>
+            <div class="commit-meta" data-i18n="exp3Org">Freelance, Annaba</div>
+            <div class="commit-body" data-i18n="exp3Text">Applications web responsives avec HTML, CSS, JavaScript et Laravel, interfaces modernes, backend sécurisé.</div>
+          </div>
+        </div>
+
+        <div class="track-label" data-i18n="skillsTitle">Compétences</div>
+        <div class="skills-obj">
+          <span class="brace">const skills = {</span>
+          <div class="skill-line"><span class="key">python:</span><span class="bar-track"><span class="bar-fill" style="width:90%"></span></span><span class="pct">90%</span></div>
+          <div class="skill-line"><span class="key">sql:</span><span class="bar-track"><span class="bar-fill" style="width:88%"></span></span><span class="pct">88%</span></div>
+          <div class="skill-line"><span class="key">javascript:</span><span class="bar-track"><span class="bar-fill" style="width:78%"></span></span><span class="pct">78%</span></div>
+          <div class="skill-line"><span class="key">phpLaravel:</span><span class="bar-track"><span class="bar-fill" style="width:82%"></span></span><span class="pct">82%</span></div>
+          <div class="skill-line"><span class="key">powerBiExcel:</span><span class="bar-track"><span class="bar-fill" style="width:85%"></span></span><span class="pct">85%</span></div>
+          <div class="skill-line"><span class="key">wordpress:</span><span class="bar-track"><span class="bar-fill" style="width:88%"></span></span><span class="pct">88%</span></div>
+          <span class="brace">}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="pane" id="projects">
+      <div class="prose-section">
+        <span class="eyebrow"><span class="cm" data-i18n="projectsComment">// une sélection de projets</span></span>
+        <h2 data-i18n="projectsTitle">Projets</h2>
+        <div class="filters" id="filters">
+          <button class="active" data-filter="all" data-i18n="filterAll">tous</button>
+          <button data-filter="data" data-i18n="filterData">data</button>
+          <button data-filter="bi" data-i18n="filterBi">bi</button>
+          <button data-filter="web" data-i18n="filterWeb">web</button>
+          <button data-filter="wordpress" data-i18n="filterWordpress">wordpress</button>
+        </div>
+        <div class="projects-grid" id="projectsGrid">
+          <article class="file-card" data-category="data">
+            <div class="file-head"><span class="lang-dot" style="background:var(--kw)"></span>insurance_analysis.py</div>
+            <div class="file-body">
+              <h4 data-i18n="p1Title">Analyse de données assurance</h4>
+              <p data-i18n="p1Text">Nettoyage et analyse de données avec Python (Pandas, NumPy) durant un stage en compagnie d'assurance.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+          <article class="file-card" data-category="bi">
+            <div class="file-head"><span class="lang-dot" style="background:var(--str)"></span>kpi_dashboard.pbix</div>
+            <div class="file-body">
+              <h4 data-i18n="p2Title">Dashboard de suivi métier</h4>
+              <p data-i18n="p2Text">Tableau de bord Power BI et Excel pour le suivi de KPIs, réalisé pour un client freelance.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+          <article class="file-card" data-category="data">
+            <div class="file-head"><span class="lang-dot" style="background:var(--kw)"></span>schema.sql</div>
+            <div class="file-body">
+              <h4 data-i18n="p3Title">Conception de base de données SQL</h4>
+              <p data-i18n="p3Text">Conception et gestion de bases de données relationnelles (MySQL, PostgreSQL) pour un projet client.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+          <article class="file-card" data-category="web">
+            <div class="file-head"><span class="lang-dot" style="background:var(--type)"></span>app.laravel.php</div>
+            <div class="file-body">
+              <h4 data-i18n="p4Title">Application web Laravel</h4>
+              <p data-i18n="p4Text">Application web responsive avec Laravel, PHP et JavaScript, backend sécurisé.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+          <article class="file-card" data-category="wordpress">
+            <div class="file-head"><span class="lang-dot" style="background:var(--ok)"></span>site.wordpress</div>
+            <div class="file-body">
+              <h4 data-i18n="p5Title">Site professionnel WordPress</h4>
+              <p data-i18n="p5Text">Site vitrine avec WordPress, Elementor et Divi, optimisé vitesse, SEO et sécurité.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+          <article class="file-card" data-category="web">
+            <div class="file-head"><span class="lang-dot" style="background:var(--type)"></span>ui.jsx</div>
+            <div class="file-body">
+              <h4 data-i18n="p6Title">Interface React</h4>
+              <p data-i18n="p6Text">Interface utilisateur moderne développée avec React, axée sur la performance et l'expérience utilisateur.</p>
+              <a class="file-link" href="#" data-i18n="viewProject">voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="pane" id="contact">
+      <div class="prose-section">
+        <span class="eyebrow"><span class="cm" data-i18n="contactComment">#!/bin/bash</span></span>
+        <h2 data-i18n="contactTitle">Contact</h2>
+        <div class="terminal">
+          <div class="terminal-head">bash — contact.sh</div>
+          <div class="terminal-body">
+            <div class="prompt-line"><span class="kw">$</span> <span data-i18n="terminalWhoami">cat contact_info.txt</span></div>
+            <div class="contact-info">
+              <div class="ci-row"><span class="ci-key">email:</span><span class="ci-val">mebreknihed0@gmail.com</span></div>
+              <div class="ci-row"><span class="ci-key">phone:</span><span class="ci-val">+213 666 69 15 66</span></div>
+              <div class="ci-row"><span class="ci-key">location:</span><span class="ci-val" data-i18n="locationValue">Annaba, Algérie</span></div>
+              <div class="ci-row"><span class="ci-key">status:</span><span class="ci-val" data-i18n="statusValue">disponible pour missions freelance</span></div>
+            </div>
+            <div class="prompt-line"><span class="kw">$</span> <span data-i18n="terminalSend">./send_message.sh</span></div>
+            <form class="contact-form" id="contactForm">
+              <div class="form-row">
+                <div class="field"><label><span class="kw">--</span><span data-i18n="labelName">name</span></label><input type="text" required data-i18n-placeholder="phName" placeholder="Votre nom"></div>
+                <div class="field"><label><span class="kw">--</span><span data-i18n="labelEmailForm">email</span></label><input type="email" required data-i18n-placeholder="phEmail" placeholder="vous@example.com"></div>
+              </div>
+              <div class="field"><label><span class="kw">--</span><span data-i18n="labelSubject">subject</span></label><input type="text" data-i18n-placeholder="phSubject" placeholder="Objet du message"></div>
+              <div class="field"><label><span class="kw">--</span><span data-i18n="labelMessage">message</span></label><textarea rows="4" required data-i18n-placeholder="phMessage" placeholder="Votre message..."></textarea></div>
+              <button type="submit" class="send-btn" data-i18n="sendMessage">run --send</button>
+              <p class="form-note" id="formNote" data-i18n="formNoteText">✓ message envoyé — je reviens vers vous rapidement !</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Status bar -->
+  <div class="statusbar">
+    <div class="left">
+      <span data-i18n="statusBranch">⎇ main</span>
+      <span data-i18n="statusEncoding">UTF-8</span>
+    </div>
+    <div class="right">
+      <div class="socials">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+      </div>
+      <span id="statusLive">● <span data-i18n="statusLive">en ligne</span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+const dict = {
+  fr:{
+    aboutComment:"// ce que je fais", aboutFn:"capabilities",
+    m1Desc:"Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception et gestion de bases SQL.",
+    m2Desc:"Création de tableaux de bord et de rapports avec Power BI et Excel pour l'aide à la décision.",
+    m3Desc:"Applications web responsives avec Laravel, PHP, React, HTML/CSS/JavaScript, backend sécurisé.",
+    m4Desc:"Sites professionnels avec WordPress, Elementor et Divi, optimisés vitesse, SEO et sécurité.",
+    resumeComment:"// formation & expérience", resumeTitle:"Parcours",
+    educationTitle:"Formation", experienceTitle:"Expérience",
+    edu1Title:"Master en Gestion et Analyse du Big Data", edu1Org:"Université Badji Mokhtar, Annaba", edu1Text:"Spécialisation en technologies Big Data et traitement de données. Mémoire : développement d'un projet orienté startup basé sur des solutions Big Data.",
+    edu2Title:"Licence en Informatique", edu2Org:"Université Badji Mokhtar, Annaba", edu2Text:"Projet de fin d'études : conception et développement d'une application web orientée startup.",
+    exp0Title:"Data Engineering Intern", exp0Org:"Société Nationale d'Assurance (SAA), Annaba", exp0Text:"Stage en ingénierie de données au sein d'une compagnie d'assurance, contribution au traitement et à l'analyse de données.",
+    exp1Title:"Data Engineer (Freelance)", exp1Org:"Freelance, Annaba", exp1Text:"Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception de bases SQL, dashboards Power BI et Excel.",
+    exp2Title:"WordPress Developer (Freelance)", exp2Org:"Freelance, Annaba", exp2Text:"Sites professionnels avec WordPress, Elementor et Divi, personnalisation de thèmes, optimisation SEO, vitesse et sécurité.",
+    exp3Title:"Web Developer (Freelance)", exp3Org:"Freelance, Annaba", exp3Text:"Applications web responsives avec HTML, CSS, JavaScript et Laravel, interfaces modernes, backend sécurisé.",
+    skillsTitle:"Compétences",
+    projectsComment:"// une sélection de projets", projectsTitle:"Projets",
+    filterAll:"tous", filterData:"data", filterBi:"bi", filterWeb:"web", filterWordpress:"wordpress",
+    p1Title:"Analyse de données assurance", p1Text:"Nettoyage et analyse de données avec Python (Pandas, NumPy) durant un stage en compagnie d'assurance.",
+    p2Title:"Dashboard de suivi métier", p2Text:"Tableau de bord Power BI et Excel pour le suivi de KPIs, réalisé pour un client freelance.",
+    p3Title:"Conception de base de données SQL", p3Text:"Conception et gestion de bases de données relationnelles (MySQL, PostgreSQL) pour un projet client.",
+    p4Title:"Application web Laravel", p4Text:"Application web responsive avec Laravel, PHP et JavaScript, backend sécurisé.",
+    p5Title:"Site professionnel WordPress", p5Text:"Site vitrine avec WordPress, Elementor et Divi, optimisé vitesse, SEO et sécurité.",
+    p6Title:"Interface React", p6Text:"Interface utilisateur moderne développée avec React, axée sur la performance et l'expérience utilisateur.",
+    viewProject:"voir le projet",
+    contactComment:"#!/bin/bash", contactTitle:"Contact",
+    terminalWhoami:"cat contact_info.txt", terminalSend:"./send_message.sh",
+    locationValue:"Annaba, Algérie", statusValue:"disponible pour missions freelance",
+    labelName:"name", labelEmailForm:"email", labelSubject:"subject", labelMessage:"message",
+    phName:"Votre nom", phEmail:"vous@example.com", phSubject:"Objet du message", phMessage:"Votre message...",
+    sendMessage:"run --send", formNoteText:"✓ message envoyé — je reviens vers vous rapidement !",
+    statusBranch:"⎇ main", statusEncoding:"UTF-8", statusLive:"en ligne"
+  },
+  en:{
+    aboutComment:"// what I do", aboutFn:"capabilities",
+    m1Desc:"Analyzing and processing data with Python (Pandas, NumPy) and R, designing and managing SQL databases.",
+    m2Desc:"Building dashboards and reports with Power BI and Excel for decision-making.",
+    m3Desc:"Responsive web applications with Laravel, PHP, React, HTML/CSS/JavaScript, secure backend.",
+    m4Desc:"Professional websites with WordPress, Elementor and Divi, optimized for speed, SEO and security.",
+    resumeComment:"// education & experience", resumeTitle:"Resume",
+    educationTitle:"Education", experienceTitle:"Experience",
+    edu1Title:"Master's in Big Data Management and Analysis", edu1Org:"Badji Mokhtar Annaba University", edu1Text:"Specialization in Big Data technologies and data processing. Thesis: development of a startup-oriented project based on Big Data solutions.",
+    edu2Title:"Bachelor's in Computer Science", edu2Org:"Badji Mokhtar Annaba University", edu2Text:"Final Year Project: design and development of a startup-oriented web application.",
+    exp0Title:"Data Engineering Intern", exp0Org:"Société Nationale d'Assurance (SAA), Annaba", exp0Text:"Data engineering internship within an insurance company, contributing to data processing and analysis.",
+    exp1Title:"Data Engineer (Freelance)", exp1Org:"Freelance, Annaba", exp1Text:"Analyzing and processing data with Python (Pandas, NumPy) and R, designing SQL databases, Power BI and Excel dashboards.",
+    exp2Title:"WordPress Developer (Freelance)", exp2Org:"Freelance, Annaba", exp2Text:"Professional websites with WordPress, Elementor and Divi, theme customization, SEO, speed and security optimization.",
+    exp3Title:"Web Developer (Freelance)", exp3Org:"Freelance, Annaba", exp3Text:"Responsive web applications with HTML, CSS, JavaScript and Laravel, modern UIs, secure backend.",
+    skillsTitle:"Skills",
+    projectsComment:"// a selection of projects", projectsTitle:"Projects",
+    filterAll:"all", filterData:"data", filterBi:"bi", filterWeb:"web", filterWordpress:"wordpress",
+    p1Title:"Insurance data analysis", p1Text:"Cleaning and analyzing data with Python (Pandas, NumPy) during an internship at an insurance company.",
+    p2Title:"Business tracking dashboard", p2Text:"Power BI and Excel dashboard for KPI tracking, built for a freelance client.",
+    p3Title:"SQL database design", p3Text:"Designing and managing relational databases (MySQL, PostgreSQL) for a client project.",
+    p4Title:"Laravel web application", p4Text:"Responsive web application built with Laravel, PHP and JavaScript, secure backend.",
+    p5Title:"WordPress business site", p5Text:"Showcase website with WordPress, Elementor and Divi, optimized for speed, SEO and security.",
+    p6Title:"React interface", p6Text:"Modern user interface built with React, focused on performance and user experience.",
+    viewProject:"view project",
+    contactComment:"#!/bin/bash", contactTitle:"Contact",
+    terminalWhoami:"cat contact_info.txt", terminalSend:"./send_message.sh",
+    locationValue:"Annaba, Algeria", statusValue:"available for freelance work",
+    labelName:"name", labelEmailForm:"email", labelSubject:"subject", labelMessage:"message",
+    phName:"Your name", phEmail:"you@example.com", phSubject:"Subject", phMessage:"Your message...",
+    sendMessage:"run --send", formNoteText:"✓ message sent — I'll get back to you soon!",
+    statusBranch:"⎇ main", statusEncoding:"UTF-8", statusLive:"online"
+  }
+};
+
+// ---- typed code block for about.ts hero snippet ----
+const codeLines = {
+  fr:[
+    {t:[["kw","const"]," ",["prop","profile"]," = {"]},
+    {t:["  ",["prop","name"],": ",["str",'"Nihed Mebrek"'],","]},
+    {t:["  ",["prop","role"],": ",["str",'"Big Data Engineer & Full Stack Developer"'],","]},
+    {t:["  ",["prop","degree"],": ",["str",'"Master en Big Data — Badji Mokhtar, Annaba"'],","]},
+    {t:["  ",["prop","stack"],": [",["str",'"Python"'],", ",["str",'"SQL"'],", ",["str",'"Laravel"'],", ",["str",'"React"'],", ",["str",'"WordPress"'],"],"]},
+    {t:["  ",["prop","location"],": ",["str",'"Annaba, Algérie"'],","]},
+    {t:["  ",["prop","status"],": ",["str",'"disponible pour missions freelance"']]},
+    {t:["};"]}
+  ],
+  en:[
+    {t:[["kw","const"]," ",["prop","profile"]," = {"]},
+    {t:["  ",["prop","name"],": ",["str",'"Nihed Mebrek"'],","]},
+    {t:["  ",["prop","role"],": ",["str",'"Big Data Engineer & Full Stack Developer"'],","]},
+    {t:["  ",["prop","degree"],": ",["str",'"Master\\u2019s in Big Data — Badji Mokhtar, Annaba"'],","]},
+    {t:["  ",["prop","stack"],": [",["str",'"Python"'],", ",["str",'"SQL"'],", ",["str",'"Laravel"'],", ",["str",'"React"'],", ",["str",'"WordPress"'],"],"]},
+    {t:["  ",["prop","location"],": ",["str",'"Annaba, Algeria"'],","]},
+    {t:["  ",["prop","status"],": ",["str",'"available for freelance work"']]},
+    {t:["};"]}
+  ]
+};
+
+function renderCode(lang){
+  const lines = codeLines[lang];
+  const gutter = document.getElementById('gutterAbout');
+  const content = document.getElementById('codeAbout');
+  gutter.innerHTML = lines.map((_,i)=>`<div>${i+1}</div>`).join('');
+  content.innerHTML = lines.map(line=>{
+    const parts = line.t.map(part=>{
+      if(Array.isArray(part)){
+        const [cls, txt] = part;
+        return `<span class="${cls}">${txt}</span>`;
+      }
+      return part;
+    }).join('');
+    return `<div class="ln">${parts}</div>`;
+  }).join('');
+}
+
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  const d = dict[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(d[key] !== undefined) el.textContent = d[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(d[key] !== undefined) el.setAttribute('placeholder', d[key]);
+  });
+  document.getElementById('langFR').classList.toggle('active', lang==='fr');
+  document.getElementById('langEN').classList.toggle('active', lang==='en');
+  renderCode(lang);
+}
+
+document.getElementById('langFR').addEventListener('click', ()=>applyLang('fr'));
+document.getElementById('langEN').addEventListener('click', ()=>applyLang('en'));
+
+// tabs
+document.getElementById('tabbar').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#tabbar button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById(btn.dataset.tab).classList.add('active');
+});
+
+// filters
+document.getElementById('filters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.file-card').forEach(card=>{
+    card.style.display = (filter==='all' || card.dataset.category===filter) ? '' : 'none';
+  });
+});
+
+// contact form
+document.getElementById('contactForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('formNote').classList.add('show');
+  e.target.reset();
+});
+
+renderCode('fr');
+</script>
+</body>
+</html>

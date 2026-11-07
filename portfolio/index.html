@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}})();
+</script>
+
+<!-- Couleur de la barre du navigateur mobile (sombre / clair) -->
+<meta name="theme-color" content="#090b12" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f6fb" media="(prefers-color-scheme: light)">
+
+<!-- SEO -->
+<title>Nihed Mebrek — Big Data Engineer & Full Stack Developer</title>
+<meta name="description" content="Nihed Mebrek, ingénieure Big Data et développeuse Full Stack à Annaba. Dashboards, analyse de données, applications web et sites WordPress sur mesure.">
+<meta name="author" content="Nihed Mebrek">
+<meta name="keywords" content="Big Data, Data Engineer, Full Stack Developer, WordPress, Laravel, React, Power BI, Python, SQL, Annaba, Algérie, freelance">
+<meta name="robots" content="index, follow, max-image-preview:large">
+
+
+<!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nihed Mebrek">
+<meta property="og:title" content="Nihed Mebrek — Big Data Engineer & Full Stack Developer">
+<meta property="og:description" content="Dashboards, analyse de données, applications web et sites WordPress sur mesure.">
+<meta property="og:image" content="https://www.votredomaine.com/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nihed Mebrek — Big Data Engineer & Full Stack Developer">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ar_DZ">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nihed Mebrek — Big Data Engineer & Full Stack Developer">
+<meta name="twitter:description" content="Dashboards, analyse de données, applications web et sites WordPress sur mesure.">
+<meta name="twitter:image" content="https://www.votredomaine.com/assets/og-image.jpg">
+
+<!-- Mobile -->
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-title" content="Nihed Mebrek">
+
+<!-- Données structurées -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nihed Mebrek","url":"https://www.votredomaine.com/","image":"https://www.votredomaine.com/assets/og-image.jpg","jobTitle":"Big Data Engineer & Full Stack Developer","email":"mebreknihed0@gmail.com","telephone":"+213666691566","address":{"@type":"PostalAddress","addressLocality":"Annaba","addressCountry":"DZ"},"alumniOf":"Badji Mokhtar Annaba University","knowsAbout":["Big Data","Python","SQL","Power BI","Laravel","React","WordPress"],"sameAs":["https://www.linkedin.com/in/VOTRE-PROFIL","https://github.com/VOTRE-PSEUDO"]}</script>
+
+<!-- Polices -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a href="#services" class="skip" data-i18n="skipL">Aller au contenu</a>
+<div class="grain"></div>
+<div class="cursor-glow" id="glow"></div>
+<div class="progress" id="progress"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-bar">
+    <a href="#top" class="brand" aria-label="Nihed Mebrek"><img class="brand-sig" src="assets/signature.png" alt="Nihed Mebrek" width="130" height="35"></a>
+    <nav class="links" id="links">
+      <a href="#services" data-i18n="nServices">Services</a>
+      <a href="#work" data-i18n="nWork">Projets</a>
+      <a href="#about" data-i18n="nAbout">À propos</a>
+      <a href="#journey" data-i18n="nJourney">Parcours</a>
+    </nav>
+    <div class="nav-r">
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="Changer de thème" data-i18n-aria="themeL">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <div class="lang"><button id="fr" class="active">FR</button><button id="en">EN</button><button id="ar" lang="ar">عربي</button></div>
+      <a href="#contact" class="nav-cta" data-i18n="nCta">Démarrer un projet</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="drop" id="drop">
+    <a href="#services" data-i18n="nServices">Services</a>
+    <a href="#work" data-i18n="nWork">Projets</a>
+    <a href="#about" data-i18n="nAbout">À propos</a>
+    <a href="#journey" data-i18n="nJourney">Parcours</a>
+    <a href="#contact" data-i18n="nCta">Démarrer un projet</a>
+    <div class="drop-lang" role="group" aria-label="Langue / Language">
+      <button type="button" data-setlang="fr" class="active">Français</button>
+      <button type="button" data-setlang="en">English</button>
+      <button type="button" data-setlang="ar" lang="ar">العربية</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="aurora"><i></i><i></i><i></i></div>
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="pill"><span class="dot"></span><span data-i18n="pill">Disponible pour de nouvelles missions</span></div>
+        <h1 class="hero-title">
+          <span data-i18n="h1a">Je conçois vos</span>
+          <span class="rot grad"><span id="rotWord">dashboards</span></span>
+          <span data-i18n="h1c">qui font grandir votre activité.</span>
+        </h1>
+        <p class="lead" data-i18n="lead">Ingénieure Big Data et développeuse Full Stack à Annaba. Je transforme vos données et vos idées en outils fiables, rapides et simples à utiliser.</p>
+        <div class="btns">
+          <a href="#contact" class="btn btn-p"><span data-i18n="cta1">Démarrer un projet</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
+          <a href="#work" class="btn btn-g" data-i18n="cta2">Voir mes réalisations</a>
+        </div>
+        <div class="trust"><span data-i18n="tr1">Master en Big Data</span><span data-i18n="tr2">Stage en assurance (SAA)</span><span data-i18n="tr3">Français & English</span><span><span data-i18n="tr4">Annaba</span>&nbsp;·&nbsp;<span class="lt">--:--</span></span></div>
+      </div>
+
+      <div class="stage">
+        <div class="glass cA">
+          <div class="win"><i></i><i></i><i></i><em data-i18n="demo">Aperçu illustratif</em></div>
+          <div class="kpi"><div><small data-i18n="kpiL">Indicateur clé · vs mois précédent</small><b><span data-count="32">0</span>%</b></div><span class="up">▲ +12%</span></div>
+          <svg class="spark" viewBox="0 0 320 96" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#7c8bff"/><stop offset="1" stop-color="#e3b567"/></linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c8bff" stop-opacity=".35"/><stop offset="1" stop-color="#7c8bff" stop-opacity="0"/></linearGradient>
+            </defs>
+            <path d="M0,78 C30,70 50,84 80,62 S130,54 160,40 S220,46 250,22 S300,18 320,8 L320,96 L0,96Z" fill="url(#g2)"/>
+            <path class="ln" d="M0,78 C30,70 50,84 80,62 S130,54 160,40 S220,46 250,22 S300,18 320,8" fill="none" stroke="url(#g1)" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <div class="bars"><span style="--h:40%"></span><span style="--h:62%;animation-delay:.08s"></span><span style="--h:48%;animation-delay:.16s"></span><span style="--h:80%;animation-delay:.24s"></span><span style="--h:58%;animation-delay:.32s"></span><span style="--h:92%;animation-delay:.4s"></span><span style="--h:70%;animation-delay:.48s"></span></div>
+        </div>
+        <div class="glass cB">
+          <div class="cap-t" data-i18n="pipeT">Pipeline de données</div>
+          <div class="pipe"><span class="pn">Source</span><span class="lk"></span><span class="pn on">Python</span><span class="lk"></span><span class="pn">Dashboard</span></div>
+        </div>
+        <div class="glass cC">
+          <div class="ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="28"/><circle class="fg" cx="32" cy="32" r="28"/></svg><b>98</b></div>
+          <div><h4 data-i18n="webT">Web rapide & sécurisé</h4><p data-i18n="webP">SEO, vitesse et sécurité intégrés dès la conception.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="mq" aria-hidden="true"><div class="mq-t">
+  <span><img src="assets/icons/python.svg" alt="" width="20" height="20" loading="lazy">Python</span><span><img src="assets/icons/sql.svg" alt="" width="20" height="20" loading="lazy">SQL</span><span><img src="assets/icons/r.svg" alt="" width="20" height="20" loading="lazy">R</span><span><img src="assets/icons/pandas.svg" alt="" width="20" height="20" loading="lazy">Pandas</span><span><img src="assets/icons/numpy.svg" alt="" width="20" height="20" loading="lazy">NumPy</span><span><img src="assets/icons/powerbi.svg" alt="" width="20" height="20" loading="lazy">Power BI</span><span><img src="assets/icons/excel.svg" alt="" width="20" height="20" loading="lazy">Excel</span><span><img src="assets/icons/mysql.svg" alt="" width="20" height="20" loading="lazy">MySQL</span><span><img src="assets/icons/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span><span><img src="assets/icons/mongodb.svg" alt="" width="20" height="20" loading="lazy">NoSQL</span><span><img src="assets/icons/git.svg" alt="" width="20" height="20" loading="lazy">Git</span>
+  <span><img src="assets/icons/python.svg" alt="" width="20" height="20" loading="lazy">Python</span><span><img src="assets/icons/sql.svg" alt="" width="20" height="20" loading="lazy">SQL</span><span><img src="assets/icons/r.svg" alt="" width="20" height="20" loading="lazy">R</span><span><img src="assets/icons/pandas.svg" alt="" width="20" height="20" loading="lazy">Pandas</span><span><img src="assets/icons/numpy.svg" alt="" width="20" height="20" loading="lazy">NumPy</span><span><img src="assets/icons/powerbi.svg" alt="" width="20" height="20" loading="lazy">Power BI</span><span><img src="assets/icons/excel.svg" alt="" width="20" height="20" loading="lazy">Excel</span><span><img src="assets/icons/mysql.svg" alt="" width="20" height="20" loading="lazy">MySQL</span><span><img src="assets/icons/postgresql.svg" alt="" width="20" height="20" loading="lazy">PostgreSQL</span><span><img src="assets/icons/mongodb.svg" alt="" width="20" height="20" loading="lazy">NoSQL</span><span><img src="assets/icons/git.svg" alt="" width="20" height="20" loading="lazy">Git</span>
+</div></div>
+<div class="mq rev" aria-hidden="true"><div class="mq-t">
+  <span><img src="assets/icons/javascript.svg" alt="" width="20" height="20" loading="lazy">JavaScript</span><span><img src="assets/icons/php.svg" alt="" width="20" height="20" loading="lazy">PHP</span><span><img src="assets/icons/laravel.svg" alt="" width="20" height="20" loading="lazy">Laravel</span><span><img src="assets/icons/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span><img src="assets/icons/html5.svg" alt="" width="20" height="20" loading="lazy">HTML</span><span><img src="assets/icons/css3.svg" alt="" width="20" height="20" loading="lazy">CSS</span><span><img src="assets/icons/wordpress.svg" alt="" width="20" height="20" loading="lazy">WordPress</span><span><img src="assets/icons/elementor.svg" alt="" width="20" height="20" loading="lazy">Elementor</span><span><img src="assets/icons/divi.svg" alt="" width="20" height="20" loading="lazy">Divi</span><span><img src="assets/icons/seo.svg" alt="" width="20" height="20" loading="lazy">SEO</span>
+  <span><img src="assets/icons/javascript.svg" alt="" width="20" height="20" loading="lazy">JavaScript</span><span><img src="assets/icons/php.svg" alt="" width="20" height="20" loading="lazy">PHP</span><span><img src="assets/icons/laravel.svg" alt="" width="20" height="20" loading="lazy">Laravel</span><span><img src="assets/icons/react.svg" alt="" width="20" height="20" loading="lazy">React</span><span><img src="assets/icons/html5.svg" alt="" width="20" height="20" loading="lazy">HTML</span><span><img src="assets/icons/css3.svg" alt="" width="20" height="20" loading="lazy">CSS</span><span><img src="assets/icons/wordpress.svg" alt="" width="20" height="20" loading="lazy">WordPress</span><span><img src="assets/icons/elementor.svg" alt="" width="20" height="20" loading="lazy">Elementor</span><span><img src="assets/icons/divi.svg" alt="" width="20" height="20" loading="lazy">Divi</span><span><img src="assets/icons/seo.svg" alt="" width="20" height="20" loading="lazy">SEO</span>
+</div></div>
+
+<!-- SERVICES -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="tag" data-i18n="svTag">Services</span>
+      <h2 data-i18n-html="svTitle">Ce que je peux faire <span class="grad">pour vous.</span></h2>
+      <p data-i18n="svSub">Du traitement de vos données jusqu’au site ou à l’application que vos clients utilisent.</p>
+    </div>
+    <div class="svc-grid rv">
+      <article class="svc tilt" data-tilt>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></div>
+        <h3 data-i18n="v1t">Analyse & ingénierie de données</h3>
+        <p data-i18n="v1p">Nettoyage, traitement et structuration de vos données avec Python, R et SQL, pour partir sur des bases fiables.</p>
+      </article>
+      <article class="svc tilt" data-tilt>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></div>
+        <h3 data-i18n="v2t">Dashboards & reporting</h3>
+        <p data-i18n="v2p">Tableaux de bord Power BI et Excel clairs pour suivre vos indicateurs et décider plus vite.</p>
+      </article>
+      <article class="svc tilt" data-tilt>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14l-2 2 2 2M14 14l2 2-2 2"/></svg></div>
+        <h3 data-i18n="v3t">Applications web sur mesure</h3>
+        <p data-i18n="v3p">Applications responsives et sécurisées avec Laravel, PHP, JavaScript et React.</p>
+      </article>
+      <article class="svc tilt" data-tilt>
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <h3 data-i18n="v4t">Sites WordPress performants</h3>
+        <p data-i18n="v4p">Sites vitrines avec WordPress, Elementor et Divi, optimisés pour la vitesse, le SEO et la sécurité.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="sec" style="padding-top:1rem;">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="tag" data-i18n="prTag">Méthode</span>
+      <h2 data-i18n-html="prTitle">Comment on <span class="grad">travaille ensemble.</span></h2>
+    </div>
+    <div class="steps rv">
+      <div class="step"><div class="n">01</div><h3 data-i18n="st1t">Échange</h3><p data-i18n="st1p">On clarifie vos objectifs, vos données et vos contraintes.</p></div>
+      <div class="step"><div class="n">02</div><h3 data-i18n="st2t">Conception</h3><p data-i18n="st2p">Je propose une solution claire : périmètre, maquettes et plan d’action.</p></div>
+      <div class="step"><div class="n">03</div><h3 data-i18n="st3t">Développement</h3><p data-i18n="st3p">Je construis par étapes, vous suivez l’avancement et validez.</p></div>
+      <div class="step"><div class="n">04</div><h3 data-i18n="st4t">Livraison</h3><p data-i18n="st4p">Mise en ligne, prise en main et accompagnement après livraison.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WORK -->
+<section class="sec" id="work">
+  <div class="wrap">
+
+    <div class="head rv">
+      <span class="tag" data-i18n="wkTag">Réalisations</span>
+      <h2 data-i18n-html="wkTitle">
+        Projets <span class="grad">sélectionnés.</span>
+      </h2>
+      <p data-i18n="wkSub">
+        Un aperçu de mon travail en data, BI et développement web.
+      </p>
+    </div>
+
+    <div class="pg rv">
+
+      <!-- PROJECT 1 : HENAYN -->
+      <article class="proj tilt" data-tilt>
+        <div class="mock project-image">
+          <img src="./assets/henayn.png"
+              alt="Projet HenAyn - Platefome Web"
+              loading="lazy">
+        </div>
+
+        <div class="pb">
+          <span class="cat">Plateforme</span>
+          <h3>HenAyn –  plateforme Web</h3>
+          <p>
+            Conception et développement d'une plateforme web avec une interface
+            moderne, responsive et une expérience utilisateur optimisée.
+          </p>
+          <div class="tech">
+            <span>React Js</span>
+            <span>Fast Api</span>
+            <span>Deep Learning</span>
+            
+          </div>
+          <a href="#" class="more">
+            <span data-i18n="more">Voir le projet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M7 17L17 7M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      
+    <!-- PROJECT : ATHENOS VENTURES -->
+    <article class="proj tilt" data-tilt>
+      <div class="mock project-image">
+        <img src="./assets/athenos-ventures.png"
+            alt="Athenos Ventures - Site web professionnel"
+            loading="lazy">
+      </div>
+
+      <div class="pb">
+        <span class="cat">Web Development</span>
+        <h3>Athenos Ventures – Site web professionnel</h3>
+        <p>
+          Développement et personnalisation d'un site web professionnel,
+          avec une interface moderne, responsive et une navigation intuitive.
+        </p>
+        <div class="tech">
+          <span>WordPress</span>
+          <span>Elementor</span>
+          <span>PHP</span>
+          <span>CSS</span>
+        </div>
+        <a href="https://www.athenosventures.com/"
+          class="more"
+          target="_blank"
+          rel="noopener noreferrer">
+          <span data-i18n="more">Voir le projet</span>
+          <svg viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.4">
+            <path d="M7 17L17 7M8 7h9v9"/>
+          </svg>
+        </a>
+      </div>
+    </article>
+
+      <!-- PROJECT : HBI PROCESS EQUIPMENT -->
+      <article class="proj tilt" data-tilt>
+        <div class="mock project-image">
+          <img src="./assets/hbiprocess.png"
+              alt="HBI Process Equipment - Site web industriel"
+              loading="lazy">
+        </div>
+
+        <div class="pb">
+          <span class="cat">Site corporate</span>
+          <h3>HBI Process Equipment – Site industriel</h3>
+          <p>
+            Site web d'un constructeur d'équipements industriels en inox :
+            catalogue d'équipements, présentation des services, blog,
+            demande de devis et prise de rendez-vous en ligne.
+          </p>
+          <div class="tech">
+            <span>WordPress</span>
+            <span>Elementor</span>
+            <span>SEO</span>
+          </div>
+          <a href="https://hbiprocess.com/"
+            class="more"
+            target="_blank"
+            rel="noopener noreferrer">
+            <span data-i18n="more">Voir le projet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M7 17L17 7M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT 3 : Ecommerce -->
+      <article class="proj tilt" data-tilt>
+        <div class="mock project-image">
+          <img src="./assets/leaderaccessoire.png"
+               alt="Leader accessoires"
+               loading="lazy">
+        </div>
+        <div class="pb">
+          <span class="cat">E-commerce</span>
+          <h3 data-i18n="p3t">Leader Accessoires – Site e-commerce</h3>
+          <p data-i18n="p3p">
+            Création d'une boutique en ligne pour un projet client : catalogue
+            de produits,commande en ligne et interface responsive
+            pensée pour faciliter l'achat sur mobile comme sur ordinateur.
+          </p>
+          <div class="tech">
+            <span>Wordpress</span>
+            <span>Elementor</span>
+            <span>Woocommerce</span>
+          </div>
+          <a href="https://leaderaccessoires.com/" class="more">
+            <span data-i18n="more">Voir le projet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M7 17L17 7M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- PROJECT : KENZY FASHION -->
+      <article class="proj tilt" data-tilt>
+        <div class="mock project-image">
+          <img src="./assets/kenzyfashion.png"
+              alt="Kenzy Fashion - Boutique en ligne de mode féminine"
+              loading="lazy">
+        </div>
+
+        <div class="pb">
+          <span class="cat">E-commerce</span>
+          <h3>Kenzy Fashion – Boutique en ligne</h3>
+          <p>
+            Boutique en ligne de mode féminine : catalogue par catégories,
+            variations de tailles, panier, paiement à la livraison et
+            interface responsive pensée pour l'achat sur mobile.
+          </p>
+          <div class="tech">
+            <span>WordPress</span>
+            <span>WooCommerce</span>
+            <span>Elementor</span>
+            <span>SEO</span>
+          </div>
+          <a href="https://www.kenzyfashion.com/"
+            class="more"
+            target="_blank"
+            rel="noopener noreferrer">
+            <span data-i18n="more">Voir le projet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M7 17L17 7M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+      <!-- PROJECT : OLTEN DESTINATION BIEN-ÊTRE -->
+      <article class="proj tilt" data-tilt>
+        <div class="mock project-image">
+          <img src="./assets/oltenspa.png"
+              alt="Olten Destination Bien-être - Site web spa et boutique CBD"
+              loading="lazy">
+        </div>
+
+        <div class="pb">
+          <span class="cat">Site + Boutique</span>
+          <h3>Olten Destination Bien-être – Spa & boutique</h3>
+          <p>
+            Site web d'un spa avec présentation des soins, réservation en ligne
+            et boutique de produits bien-être et CBD, dans une interface
+            élégante et responsive.
+          </p>
+          <div class="tech">
+            <span>WordPress</span>
+            <span>Elementor</span>
+            <span>WooCommerce</span>
+            <span>SEO</span>
+          </div>
+          <a href="https://olten-destination-bien-être.fr/"
+            class="more"
+            target="_blank"
+            rel="noopener noreferrer">
+            <span data-i18n="more">Voir le projet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <path d="M7 17L17 7M8 7h9v9"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- WHY / ABOUT -->
+<section class="sec" id="about" style="padding-top:1rem;">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="tag" data-i18n="abTag">Pourquoi moi</span>
+      <h2 data-i18n-html="abTitle">Une seule personne, <span class="grad">de la donnée au site.</span></h2>
+      <p data-i18n="abSub">Je suis Nihed, ingénieure Big Data et développeuse Full Stack. J’aime les projets où la technique sert un vrai besoin.</p>
+    </div>
+    <div class="why rv">
+      <div class="wy tilt" data-tilt><i class="grad">01</i><div><h3 data-i18n="w1t">Double expertise</h3><p data-i18n="w1p">Data et web réunis : pas besoin de coordonner plusieurs prestataires.</p></div></div>
+      <div class="wy tilt" data-tilt><i class="grad">02</i><div><h3 data-i18n="w2t">Formation solide</h3><p data-i18n="w2p">Master en gestion et analyse de Big Data, Licence en Informatique.</p></div></div>
+      <div class="wy tilt" data-tilt><i class="grad">03</i><div><h3 data-i18n="w3t">Expérience en entreprise</h3><p data-i18n="w3p">Stage en ingénierie de données à la Société Nationale d’Assurance (SAA).</p></div></div>
+      <div class="wy tilt" data-tilt><i class="grad">04</i><div><h3 data-i18n="w4t">Échanges simples</h3><p data-i18n="w4p">Communication claire en français et en anglais, du premier échange à la livraison.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY -->
+<section class="sec" id="journey" style="padding-top:1rem;">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="tag" data-i18n="jTag">Parcours</span>
+      <h2 data-i18n-html="jTitle">Expérience & <span class="grad">formation.</span></h2>
+    </div>
+    <div class="jr rv">
+      <div>
+        <h3 data-i18n="gExp">Expérience</h3>
+        <div class="it"><div class="w" data-i18n="x0w">Mars — Mai 2026</div><h4>Data Engineering Intern</h4><div class="o">Société Nationale d’Assurance (SAA) · Annaba</div><p data-i18n="x0p">Stage en ingénierie de données au sein d’une compagnie d’assurance.</p></div>
+        <div class="it"><div class="w" data-i18n="x1w">Avr 2025 — Présent</div><h4>Data Engineer</h4><div class="o">Freelance · Annaba</div><p data-i18n="x1p">Analyse de données (Python, R), bases SQL, dashboards Power BI et Excel.</p></div>
+        <div class="it"><div class="w" data-i18n="x2w">Juin 2024 — Présent</div><h4>WordPress Developer</h4><div class="o">Freelance · Annaba</div><p data-i18n="x2p">Sites WordPress, Elementor et Divi ; thèmes, plugins, SEO, vitesse et sécurité.</p></div>
+        <div class="it"><div class="w" data-i18n="x3w">Fév 2024 — Présent</div><h4>Web Developer</h4><div class="o">Freelance · Annaba</div><p data-i18n="x3p">Applications web en HTML, CSS, JavaScript, PHP et Laravel, backend sécurisé.</p></div>
+      </div>
+      <div>
+        <h3 data-i18n="gEdu">Formation</h3>
+        <div class="it"><div class="w" data-i18n="e1w">Jan 2024 — Jan 2026</div><h4 data-i18n="e1t">Master en Gestion et Analyse du Big Data</h4><div class="o" data-i18n="uni">Université Badji Mokhtar · Annaba</div><p data-i18n="e1p">Spécialisation en technologies Big Data. Mémoire : projet orienté startup basé sur des solutions Big Data.</p></div>
+        <div class="it"><div class="w">2021 — 2024</div><h4 data-i18n="e2t">Licence en Informatique</h4><div class="o" data-i18n="uni">Université Badji Mokhtar · Annaba</div><p data-i18n="e2p">Projet de fin d’études : application web orientée startup.</p></div>
+        <div class="it"><div class="w">2018 — 2021</div><h4 data-i18n="e3t">Certificat d’anglais B2</h4><div class="o">Apostrophe Language School · Annaba</div><p data-i18n="e3p">Niveau intermédiaire supérieur, utilisé pour échanger avec des clients internationaux.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq" style="padding-top:1rem;">
+  <div class="wrap">
+    <div class="head rv">
+      <span class="tag" data-i18n="fqTag">FAQ</span>
+      <h2 data-i18n-html="fqTitle">Questions <span class="grad">fréquentes.</span></h2>
+    </div>
+    <div class="faq rv">
+      <details class="faq-i"><summary data-i18n="q1">Comment démarre un projet ?</summary><p data-i18n="a1">Par un échange pour comprendre votre besoin, vos données et vos contraintes. Ensuite je vous propose une solution claire et un plan d’action.</p></details>
+      <details class="faq-i"><summary data-i18n="q2">Pouvez-vous travailler à distance ?</summary><p data-i18n="a2">Oui. Je suis basée à Annaba et je peux échanger par email, WhatsApp ou appel avec des clients où qu’ils soient.</p></details>
+      <details class="faq-i"><summary data-i18n="q3">Quelles technologies utilisez-vous ?</summary><p data-i18n="a3">Python, R, SQL et Power BI pour la data ; Laravel, PHP, JavaScript, React et WordPress pour le web.</p></details>
+      <details class="faq-i"><summary data-i18n="q4">Dans quelles langues travaillez-vous ?</summary><p data-i18n="a4">En français et en anglais.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec" id="contact" style="padding-top:1rem;">
+  <div class="wrap">
+    <div class="cta rv">
+      <div class="aurora"><i></i><i></i><i></i></div>
+      <div class="cta-in">
+        <div>
+          <span class="tag" data-i18n="cTag">Contact</span>
+          <h2 data-i18n-html="cTitle">Un projet en tête&nbsp;? <span class="grad">Parlons-en.</span></h2>
+          <p class="sub" data-i18n="cSub">Décrivez votre besoin, je reviens vers vous avec une proposition claire.</p>
+          <div class="ways">
+            <div class="way em"><a class="wl" href="mailto:mebreknihed0@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><div><small>Email</small><span dir="ltr">mebreknihed0@gmail.com</span></div></a><button type="button" class="cp" id="copyMail" data-i18n-aria="copyL" aria-label="Copier l’email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></button></div>
+            <a class="way" href="https://wa.me/213666691566" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-13.4 7.8L3 21l1.3-4.4A9 9 0 1 1 21 12z"/></svg><div><small>WhatsApp</small><span dir="ltr">+213 666 69 15 66</span></div></a>
+            <a class="way" href="tel:+213666691566"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg><div><small data-i18n="call">Appel</small><span dir="ltr">+213 666 69 15 66</span></div></a>
+          </div>
+        </div>
+        <form id="form">
+          <div class="two"><input type="text" id="fn" required data-i18n-ph="fName" placeholder="Votre nom"><input type="email" id="fe" required data-i18n-ph="fEmail" placeholder="Votre email"></div>
+          <input type="text" id="fs" data-i18n-ph="fSubj" placeholder="Sujet">
+          <textarea id="fm" rows="5" required data-i18n-ph="fMsg" placeholder="Décrivez votre projet…"></textarea>
+          <button type="submit" class="btn btn-p send"><span data-i18n="fSend">Envoyer le message</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M7 17L17 7M8 7h9v9"/></svg></button>
+          <p class="note" id="note" data-i18n="fNote">Votre application mail s’ouvre pour envoyer le message.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <img class="wm-sig" src="assets/signature.png" alt="Nihed Mebrek" width="760" height="205" loading="lazy">
+  <div class="foot"><span data-i18n="copy">© 2026 Nihed Mebrek. Tous droits réservés.</span><span class="madein"><span data-i18n="made">Conçu à Annaba</span>&nbsp;·&nbsp;<span class="lt">--:--</span></span><div class="soc"><a href="#">LinkedIn</a><a href="#">GitHub</a><a href="#top" class="top" data-i18n-aria="topL" aria-label="Retour en haut">↑</a></div></div>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<a href="#contact" class="float-cta" id="floatCta"><i></i><span data-i18n="float">Discutons de votre projet</span></a>
+
+<script src="js/main.js"></script>
+</body>
+</html>

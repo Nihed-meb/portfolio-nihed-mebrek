@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nihed Mebrek — Big Data Engineer & Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf9f6;
+    --bg-alt:#f2efe8;
+    --panel:#ffffff;
+    --ink:#181c22;
+    --ink-soft:#5b6270;
+    --ink-faint:#9297a1;
+    --line:#e2ded3;
+    --accent:#2f5d50;
+    --accent-soft:#e3ebe6;
+    --gold:#a9824c;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.65;
+  }
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;background:none;border:none;}
+  input,textarea{font-family:inherit;}
+  img{max-width:100%;display:block;}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 2.2rem;}
+
+  h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;color:var(--ink);}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+  }
+  .eyebrow::before{content:'';width:16px;height:1px;background:var(--gold);}
+
+  /* ===== Top nav ===== */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,249,246,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:0 2.2rem;
+    height:76px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{font-family:var(--font-display);font-size:1.15rem;font-weight:650;}
+  .brand span{color:var(--accent);}
+  .nav-links{display:flex;gap:2.1rem;}
+  .nav-links a{
+    font-size:0.88rem;color:var(--ink-soft);
+    position:relative;
+    padding-bottom:4px;
+  }
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
+    background:var(--accent);transition:width .25s ease;
+  }
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+  .nav-links a.active{color:var(--ink);}
+  .nav-right{display:flex;align-items:center;gap:1.1rem;}
+  .lang-toggle{display:flex;border:1px solid var(--line);border-radius:20px;overflow:hidden;}
+  .lang-toggle button{padding:0.35rem 0.75rem;font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-faint);}
+  .lang-toggle button.active{background:var(--ink);color:var(--bg);}
+  .nav-cta{
+    font-size:0.82rem;font-weight:500;
+    padding:0.55rem 1.1rem;
+    border:1px solid var(--ink);border-radius:24px;
+    transition:background .2s ease,color .2s ease;
+  }
+  .nav-cta:hover{background:var(--ink);color:var(--bg);}
+  .burger{display:none;width:22px;height:16px;position:relative;}
+  .burger span{position:absolute;left:0;width:100%;height:2px;background:var(--ink);}
+  .burger span:nth-child(1){top:0;} .burger span:nth-child(2){top:7px;} .burger span:nth-child(3){top:14px;}
+
+  /* ===== Hero ===== */
+  .hero{padding:5.5rem 0 4.5rem;}
+  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:3rem;align-items:end;}
+  .hero-name{
+    font-size:clamp(2.6rem, 5.4vw, 4.4rem);
+    line-height:1.02;
+    margin:1.1rem 0 1.4rem;
+  }
+  .hero-name em{font-style:italic;color:var(--accent);font-weight:500;}
+  .hero-desc{color:var(--ink-soft);font-size:1.05rem;max-width:52ch;}
+  .hero-side{
+    border-left:1px solid var(--line);
+    padding-left:1.8rem;
+    display:flex;flex-direction:column;gap:1.1rem;
+  }
+  .hero-stat .num{font-family:var(--font-display);font-size:1.9rem;color:var(--ink);}
+  .hero-stat .lbl{font-family:var(--font-mono);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--ink-faint);}
+  .hero-actions{margin-top:2.2rem;display:flex;gap:0.9rem;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--ink);color:var(--bg);
+    padding:0.8rem 1.5rem;border-radius:28px;
+    font-size:0.88rem;font-weight:500;
+    display:inline-flex;align-items:center;gap:0.5rem;
+    transition:background .2s ease;
+  }
+  .btn-primary:hover{background:var(--accent);}
+  .btn-primary svg{width:14px;height:14px;}
+  .btn-ghost{
+    padding:0.8rem 1.5rem;border-radius:28px;border:1px solid var(--line);
+    font-size:0.88rem;font-weight:500;color:var(--ink-soft);
+    transition:border-color .2s ease,color .2s ease;
+  }
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+  .marquee{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:1.1rem 0; overflow:hidden;white-space:nowrap;
+    background:var(--bg-alt);
+  }
+  .marquee-track{display:inline-flex;gap:2.6rem;animation:scroll 26s linear infinite;}
+  .marquee-track span{
+    font-family:var(--font-mono);font-size:0.8rem;color:var(--ink-faint);
+    letter-spacing:0.03em;display:inline-flex;align-items:center;gap:2.6rem;
+  }
+  .marquee-track span::after{content:'·';color:var(--gold);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ===== Section shell ===== */
+  section{padding:5rem 0;}
+  section.alt{background:var(--bg-alt);}
+  .section-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.8rem;gap:2rem;flex-wrap:wrap;}
+  .section-top h2{font-size:clamp(1.8rem,3vw,2.4rem);margin-top:0.5rem;}
+  .section-top p{color:var(--ink-soft);max-width:38ch;font-size:0.92rem;}
+
+  /* ===== About ===== */
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:3.2rem;}
+  .about-text p{color:var(--ink-soft);margin-bottom:1.1rem;font-size:0.98rem;}
+  .about-text strong{color:var(--ink);font-weight:600;}
+  .capabilities{display:flex;flex-direction:column;}
+  .cap-row{
+    display:grid;grid-template-columns:2.4rem 1fr auto;gap:1.2rem;align-items:center;
+    padding:1.2rem 0;border-top:1px solid var(--line);
+  }
+  .cap-row:last-child{border-bottom:1px solid var(--line);}
+  .cap-idx{font-family:var(--font-mono);font-size:0.78rem;color:var(--gold);}
+  .cap-body h4{font-size:1.02rem;font-weight:600;margin-bottom:0.25rem;}
+  .cap-body p{font-size:0.86rem;color:var(--ink-soft);}
+  .cap-arrow{color:var(--ink-faint);transition:transform .2s ease,color .2s ease;}
+  .cap-row:hover .cap-arrow{transform:translateX(4px);color:var(--accent);}
+  .cap-arrow svg{width:16px;height:16px;}
+
+  /* ===== Resume / timeline ===== */
+  .resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+  .track-title{font-family:var(--font-mono);font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--ink-faint);margin-bottom:1.4rem;padding-bottom:0.8rem;border-bottom:1px solid var(--line);}
+  .tl-item{padding:1.4rem 0;border-bottom:1px solid var(--line);}
+  .tl-item:last-child{border-bottom:none;}
+  .tl-period{font-family:var(--font-mono);font-size:0.74rem;color:var(--accent);}
+  .tl-item h4{font-size:1.05rem;margin:0.35rem 0 0.15rem;}
+  .tl-org{font-size:0.85rem;color:var(--ink-faint);margin-bottom:0.5rem;}
+  .tl-item p{font-size:0.88rem;color:var(--ink-soft);}
+
+  .skills-wrap{margin-top:3.2rem;}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:0.6rem 2.4rem;}
+  .skill-row{padding:0.75rem 0;border-bottom:1px solid var(--line);}
+  .skill-top{display:flex;justify-content:space-between;font-size:0.88rem;margin-bottom:0.5rem;}
+  .skill-top .val{font-family:var(--font-mono);font-size:0.74rem;color:var(--accent);}
+  .skill-bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;}
+  .skill-bar span{display:block;height:100%;background:var(--accent);}
+
+  /* ===== Portfolio ===== */
+  .filters{display:flex;flex-wrap:wrap;gap:0.6rem;}
+  .filters button{
+    padding:0.5rem 1.05rem;border-radius:20px;border:1px solid var(--line);
+    font-size:0.82rem;color:var(--ink-soft);transition:all .2s ease;
+  }
+  .filters button:hover{border-color:var(--accent);color:var(--accent);}
+  .filters button.active{background:var(--ink);border-color:var(--ink);color:var(--bg);}
+
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.6rem;margin-top:2.6rem;}
+  .project-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;transition:box-shadow .25s ease,transform .25s ease;
+  }
+  .project-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -18px rgba(24,28,34,0.22);}
+  .project-thumb{
+    height:150px;
+    background:
+      repeating-linear-gradient(135deg, var(--accent-soft) 0 2px, transparent 2px 14px),
+      var(--bg-alt);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:flex-end;justify-content:flex-start;padding:0.9rem;
+  }
+  .project-thumb span{font-family:var(--font-mono);font-size:0.68rem;color:var(--ink-faint);}
+  .project-body{padding:1.3rem 1.4rem 1.5rem;}
+  .project-tag{font-family:var(--font-mono);font-size:0.66rem;text-transform:uppercase;color:var(--accent);letter-spacing:0.06em;}
+  .project-body h4{font-size:1.08rem;margin:0.5rem 0 0.5rem;}
+  .project-body p{font-size:0.86rem;color:var(--ink-soft);margin-bottom:1rem;}
+  .project-link{font-size:0.82rem;color:var(--ink);display:inline-flex;align-items:center;gap:0.4rem;font-weight:500;}
+  .project-link svg{width:13px;height:13px;transition:transform .2s ease;}
+  .project-link:hover svg{transform:translate(2px,-2px);}
+
+  /* ===== Contact ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:3.2rem;}
+  .contact-list{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem;}
+  .contact-row{display:flex;gap:1rem;align-items:flex-start;padding-bottom:1.5rem;border-bottom:1px solid var(--line);}
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row .ic{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .contact-row .ic svg{width:15px;height:15px;}
+  .contact-lbl{font-family:var(--font-mono);font-size:0.68rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);}
+  .contact-val{font-size:0.94rem;margin-top:0.15rem;}
+  form.contact-form{display:flex;flex-direction:column;gap:1.1rem;}
+  .form-row{display:flex;gap:1.1rem;}
+  .field{flex:1;display:flex;flex-direction:column;gap:0.45rem;}
+  .field label{font-size:0.76rem;color:var(--ink-faint);font-family:var(--font-mono);}
+  .field input,.field textarea{
+    background:var(--panel);border:1px solid var(--line);border-radius:6px;
+    padding:0.75rem 0.95rem;font-size:0.9rem;color:var(--ink);resize:vertical;
+  }
+  .field input:focus,.field textarea:focus{border-color:var(--accent);outline:none;}
+  .send-btn{
+    align-self:flex-start;padding:0.85rem 1.8rem;border-radius:28px;
+    background:var(--ink);color:var(--bg);font-size:0.9rem;font-weight:500;
+    transition:background .2s ease;
+  }
+  .send-btn:hover{background:var(--accent);}
+  .form-note{font-size:0.78rem;color:var(--ink-faint);display:none;}
+  .form-note.show{display:block;color:var(--accent);}
+
+  footer{border-top:1px solid var(--line);padding:2.2rem 0;}
+  .footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+  .footer-inner p{font-size:0.8rem;color:var(--ink-faint);}
+  .socials{display:flex;gap:0.7rem;}
+  .socials a{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);
+    transition:all .2s ease;
+  }
+  .socials a:hover{border-color:var(--accent);color:var(--accent);}
+  .socials svg{width:14px;height:14px;}
+
+  @media (max-width:900px){
+    .hero-grid,.about-grid,.resume-grid,.contact-grid{grid-template-columns:1fr;}
+    .hero-side{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:1.4rem;flex-direction:row;flex-wrap:wrap;gap:2rem;}
+    .nav-links{display:none;}
+    .burger{display:block;}
+    .form-row{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner wrap" style="padding:0;">
+    <div class="brand">N<span>.</span>M</div>
+    <div class="nav-links">
+      <a href="#about" class="active" data-i18n="navAbout">À propos</a>
+      <a href="#resume" data-i18n="navResume">Parcours</a>
+      <a href="#work" data-i18n="navWork">Projets</a>
+      <a href="#contact" data-i18n="navContact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="langFR" class="active">FR</button>
+        <button id="langEN">EN</button>
+      </div>
+      <a href="#contact" class="nav-cta" data-i18n="navCta">Me contacter</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <span class="eyebrow" data-i18n="heroEyebrow">Big Data Engineer · Full Stack Developer</span>
+  <div class="hero-grid">
+    <div>
+      <h1 class="hero-name" data-i18n-html="heroName">Nihed Mebrek, <em>ingénierie de données</em> &amp; développement web.</h1>
+      <p class="hero-desc" data-i18n="heroDesc">Ingénieure Big Data et développeuse Full Stack, titulaire d'un Master en Big Data. Je conçois des solutions data-driven et des applications web évolutives, avec une passion pour transformer des données complexes en informations exploitables.</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn-primary" data-i18n="heroCta1">Voir mes projets
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+        <a href="#contact" class="btn-ghost" data-i18n="heroCta2">Discutons</a>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="hero-stat"><div class="num">2+</div><div class="lbl" data-i18n="stat1">Ans d'expérience</div></div>
+      <div class="hero-stat"><div class="num">10+</div><div class="lbl" data-i18n="stat2">Projets livrés</div></div>
+      <div class="hero-stat"><div class="num">10+</div><div class="lbl" data-i18n="stat3">Technologies maîtrisées</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Python</span><span>SQL</span><span>JavaScript</span><span>PHP</span><span>Laravel</span><span>React</span><span>Power BI</span><span>WordPress</span><span>MySQL</span><span>PostgreSQL</span><span>Git</span>
+    <span>Python</span><span>SQL</span><span>JavaScript</span><span>PHP</span><span>Laravel</span><span>React</span><span>Power BI</span><span>WordPress</span><span>MySQL</span><span>PostgreSQL</span><span>Git</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-top">
+      <div><span class="eyebrow" data-i18n="aboutEyebrow">Présentation</span><h2 data-i18n="aboutTitle">À propos de moi</h2></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p data-i18n="aboutP1">Bonjour ! Je suis Nihed Mebrek, ingénieure Big Data et développeuse Full Stack, titulaire d'un Master en gestion et analyse de Big Data de l'Université Badji Mokhtar d'Annaba.</p>
+        <p data-i18n="aboutP2">Je combine traitement et analyse de données avec Python, R et SQL, et développement web avec Laravel, PHP, React et WordPress — pour livrer des solutions complètes, de la donnée brute à l'interface utilisateur.</p>
+      </div>
+      <div class="capabilities">
+        <div class="cap-row">
+          <span class="cap-idx">01</span>
+          <div class="cap-body"><h4 data-i18n="cap1Title">Traitement & analyse de données</h4><p data-i18n="cap1Text">Analyse de données avec Python (Pandas, NumPy) et R, conception de bases SQL.</p></div>
+          <span class="cap-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+        </div>
+        <div class="cap-row">
+          <span class="cap-idx">02</span>
+          <div class="cap-body"><h4 data-i18n="cap2Title">BI & Dashboards</h4><p data-i18n="cap2Text">Tableaux de bord et rapports avec Power BI et Excel pour l'aide à la décision.</p></div>
+          <span class="cap-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+        </div>
+        <div class="cap-row">
+          <span class="cap-idx">03</span>
+          <div class="cap-body"><h4 data-i18n="cap3Title">Développement Web</h4><p data-i18n="cap3Text">Applications web responsives avec Laravel, PHP, React, HTML/CSS/JS.</p></div>
+          <span class="cap-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+        </div>
+        <div class="cap-row">
+          <span class="cap-idx">04</span>
+          <div class="cap-body"><h4 data-i18n="cap4Title">WordPress & CMS</h4><p data-i18n="cap4Text">Sites professionnels avec WordPress, Elementor et Divi, optimisés SEO et performance.</p></div>
+          <span class="cap-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume" class="alt">
+  <div class="wrap">
+    <div class="section-top">
+      <div><span class="eyebrow" data-i18n="resumeEyebrow">Parcours</span><h2 data-i18n="resumeTitle">Formation & expérience</h2></div>
+      <p data-i18n="resumeDesc">Un parcours entre ingénierie de données et développement web.</p>
+    </div>
+    <div class="resume-grid">
+      <div>
+        <div class="track-title" data-i18n="educationTitle">Formation</div>
+        <div class="tl-item">
+          <div class="tl-period">Jan 2024 — Jan 2026</div>
+          <h4 data-i18n="edu1Title">Master en Gestion et Analyse du Big Data</h4>
+          <div class="tl-org" data-i18n="edu1Org">Université Badji Mokhtar, Annaba</div>
+          <p data-i18n="edu1Text">Spécialisation en technologies Big Data et traitement de données. Mémoire : développement d'un projet orienté startup basé sur des solutions Big Data.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period">2021 — 2024</div>
+          <h4 data-i18n="edu2Title">Licence en Informatique</h4>
+          <div class="tl-org" data-i18n="edu2Org">Université Badji Mokhtar, Annaba</div>
+          <p data-i18n="edu2Text">Projet de fin d'études : conception et développement d'une application web orientée startup.</p>
+        </div>
+      </div>
+      <div>
+        <div class="track-title" data-i18n="experienceTitle">Expérience</div>
+        <div class="tl-item">
+          <div class="tl-period" data-i18n="exp0Period">Mars 2026 — Mai 2026</div>
+          <h4 data-i18n="exp0Title">Data Engineering Intern</h4>
+          <div class="tl-org" data-i18n="exp0Org">Société Nationale d'Assurance (SAA), Annaba</div>
+          <p data-i18n="exp0Text">Stage en ingénierie de données au sein d'une compagnie d'assurance, contribution au traitement et à l'analyse de données.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period" data-i18n="exp1Period">Avr 2025 — Présent</div>
+          <h4 data-i18n="exp1Title">Data Engineer (Freelance)</h4>
+          <div class="tl-org" data-i18n="exp1Org">Freelance, Annaba</div>
+          <p data-i18n="exp1Text">Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception de bases SQL, création de dashboards Power BI et Excel.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period" data-i18n="exp2Period">Juin 2024 — Présent</div>
+          <h4 data-i18n="exp2Title">WordPress Developer (Freelance)</h4>
+          <div class="tl-org" data-i18n="exp2Org">Freelance, Annaba</div>
+          <p data-i18n="exp2Text">Conception de sites professionnels avec WordPress, Elementor et Divi, personnalisation de thèmes et optimisation SEO, vitesse et sécurité.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-period" data-i18n="exp3Period">Fév 2024 — Présent</div>
+          <h4 data-i18n="exp3Title">Web Developer (Freelance)</h4>
+          <div class="tl-org" data-i18n="exp3Org">Freelance, Annaba</div>
+          <p data-i18n="exp3Text">Développement d'applications web responsives avec HTML, CSS, JavaScript, PHP et Laravel, interfaces modernes et backend sécurisé.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-wrap">
+      <div class="track-title" data-i18n="skillsTitle">Compétences</div>
+      <div class="skills-grid">
+        <div class="skill-row"><div class="skill-top"><span>Python</span><span class="val">90%</span></div><div class="skill-bar"><span style="width:90%"></span></div></div>
+        <div class="skill-row"><div class="skill-top"><span>SQL</span><span class="val">88%</span></div><div class="skill-bar"><span style="width:88%"></span></div></div>
+        <div class="skill-row"><div class="skill-top"><span>JavaScript</span><span class="val">78%</span></div><div class="skill-bar"><span style="width:78%"></span></div></div>
+        <div class="skill-row"><div class="skill-top"><span>PHP & Laravel</span><span class="val">82%</span></div><div class="skill-bar"><span style="width:82%"></span></div></div>
+        <div class="skill-row"><div class="skill-top"><span>Power BI & Excel</span><span class="val">85%</span></div><div class="skill-bar"><span style="width:85%"></span></div></div>
+        <div class="skill-row"><div class="skill-top"><span>WordPress</span><span class="val">88%</span></div><div class="skill-bar"><span style="width:88%"></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-top">
+      <div><span class="eyebrow" data-i18n="workEyebrow">Réalisations</span><h2 data-i18n="workTitle">Mes projets</h2></div>
+      <p data-i18n="workDesc">Une sélection de projets en ingénierie et analyse de données.</p>
+    </div>
+    <div class="filters" id="filters">
+      <button class="active" data-filter="all" data-i18n="filterAll">Tous</button>
+      <button data-filter="data" data-i18n="filterData">Data</button>
+      <button data-filter="bi" data-i18n="filterBi">BI & Dashboards</button>
+      <button data-filter="web" data-i18n="filterWeb">Web</button>
+      <button data-filter="wordpress" data-i18n="filterWordpress">WordPress</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid">
+      <article class="project-card" data-category="data">
+        <div class="project-thumb"><span>project_01.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p1Tag">Data</span>
+          <h4 data-i18n="p1Title">Analyse de données assurance</h4>
+          <p data-i18n="p1Text">Nettoyage et analyse de données avec Python (Pandas, NumPy) durant un stage en compagnie d'assurance.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+      <article class="project-card" data-category="bi">
+        <div class="project-thumb"><span>project_02.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p2Tag">BI & Dashboards</span>
+          <h4 data-i18n="p2Title">Dashboard de suivi métier</h4>
+          <p data-i18n="p2Text">Tableau de bord Power BI et Excel pour le suivi de KPIs, réalisé pour un client freelance.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+      <article class="project-card" data-category="data">
+        <div class="project-thumb"><span>project_03.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p3Tag">Data</span>
+          <h4 data-i18n="p3Title">Conception de base de données SQL</h4>
+          <p data-i18n="p3Text">Conception et gestion de bases de données relationnelles (MySQL, PostgreSQL) pour un projet client.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+      <article class="project-card" data-category="web">
+        <div class="project-thumb"><span>project_04.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p4Tag">Web</span>
+          <h4 data-i18n="p4Title">Application web Laravel</h4>
+          <p data-i18n="p4Text">Application web responsive avec Laravel, PHP et JavaScript, backend sécurisé.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+      <article class="project-card" data-category="wordpress">
+        <div class="project-thumb"><span>project_05.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p5Tag">WordPress</span>
+          <h4 data-i18n="p5Title">Site professionnel WordPress</h4>
+          <p data-i18n="p5Text">Site vitrine avec WordPress, Elementor et Divi, optimisé vitesse, SEO et sécurité.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+      <article class="project-card" data-category="web">
+        <div class="project-thumb"><span>project_06.svg</span></div>
+        <div class="project-body">
+          <span class="project-tag" data-i18n="p6Tag">Web</span>
+          <h4 data-i18n="p6Title">Interface React</h4>
+          <p data-i18n="p6Text">Interface utilisateur moderne développée avec React, axée sur la performance et l'expérience utilisateur.</p>
+          <a class="project-link" href="#" data-i18n="viewProject">Voir le projet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="alt">
+  <div class="wrap">
+    <div class="section-top">
+      <div><span class="eyebrow" data-i18n="contactEyebrow">Contact</span><h2 data-i18n="contactTitle">Discutons de votre projet</h2></div>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <p style="color:var(--ink-soft);font-size:0.94rem;" data-i18n="contactNote">Disponible pour des missions freelance ou des opportunités en ingénierie de données.</p>
+        <div class="contact-list">
+          <div class="contact-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+            <div><div class="contact-lbl" data-i18n="labelEmail">Email</div><div class="contact-val">mebreknihed0@gmail.com</div></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.67 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.85.54 2.81.67A2 2 0 0 1 22 16.92z"/></svg></span>
+            <div><div class="contact-lbl" data-i18n="labelPhone">Téléphone</div><div class="contact-val">+213 666 69 15 66</div></div>
+          </div>
+          <div class="contact-row">
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11z"/></svg></span>
+            <div><div class="contact-lbl" data-i18n="labelLocation">Localisation</div><div class="contact-val" data-i18n="locationValue">Annaba, Algérie</div></div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="field"><label data-i18n="labelName">Nom</label><input type="text" required data-i18n-placeholder="phName" placeholder="Votre nom"></div>
+          <div class="field"><label data-i18n="labelEmailForm">Email</label><input type="email" required data-i18n-placeholder="phEmail" placeholder="vous@example.com"></div>
+        </div>
+        <div class="field"><label data-i18n="labelSubject">Sujet</label><input type="text" data-i18n-placeholder="phSubject" placeholder="Objet du message"></div>
+        <div class="field"><label data-i18n="labelMessage">Message</label><textarea rows="5" required data-i18n-placeholder="phMessage" placeholder="Votre message..."></textarea></div>
+        <button type="submit" class="send-btn" data-i18n="sendMessage">Envoyer le message</button>
+        <p class="form-note" id="formNote" data-i18n="formNoteText">Message envoyé — merci, je reviens vers vous rapidement !</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <p data-i18n="footerText">© 2026 Nihed Mebrek. Tous droits réservés.</p>
+    <div class="socials">
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+      <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a>
+      <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const dict = {
+  fr:{
+    navAbout:"À propos", navResume:"Parcours", navWork:"Projets", navContact:"Contact", navCta:"Me contacter",
+    heroEyebrow:"Big Data Engineer · Full Stack Developer",
+    heroDesc:"Ingénieure Big Data et développeuse Full Stack, titulaire d'un Master en Big Data. Je conçois des solutions data-driven et des applications web évolutives, avec une passion pour transformer des données complexes en informations exploitables.",
+    heroCta1:"Voir mes projets", heroCta2:"Discutons",
+    stat1:"Ans d'expérience", stat2:"Projets livrés", stat3:"Technologies maîtrisées",
+    aboutEyebrow:"Présentation", aboutTitle:"À propos de moi",
+    aboutP1:"Bonjour ! Je suis Nihed Mebrek, ingénieure Big Data et développeuse Full Stack, titulaire d'un Master en gestion et analyse de Big Data de l'Université Badji Mokhtar d'Annaba.",
+    aboutP2:"Je combine traitement et analyse de données avec Python, R et SQL, et développement web avec Laravel, PHP, React et WordPress — pour livrer des solutions complètes, de la donnée brute à l'interface utilisateur.",
+    cap1Title:"Traitement & analyse de données", cap1Text:"Analyse de données avec Python (Pandas, NumPy) et R, conception de bases SQL.",
+    cap2Title:"BI & Dashboards", cap2Text:"Tableaux de bord et rapports avec Power BI et Excel pour l'aide à la décision.",
+    cap3Title:"Développement Web", cap3Text:"Applications web responsives avec Laravel, PHP, React, HTML/CSS/JS.",
+    cap4Title:"WordPress & CMS", cap4Text:"Sites professionnels avec WordPress, Elementor et Divi, optimisés SEO et performance.",
+    resumeEyebrow:"Parcours", resumeTitle:"Formation & expérience", resumeDesc:"Un parcours entre ingénierie de données et développement web.",
+    educationTitle:"Formation", experienceTitle:"Expérience",
+    edu1Title:"Master en Gestion et Analyse du Big Data", edu1Org:"Université Badji Mokhtar, Annaba", edu1Text:"Spécialisation en technologies Big Data et traitement de données. Mémoire : développement d'un projet orienté startup basé sur des solutions Big Data.",
+    edu2Title:"Licence en Informatique", edu2Org:"Université Badji Mokhtar, Annaba", edu2Text:"Projet de fin d'études : conception et développement d'une application web orientée startup.",
+    exp0Period:"Mars 2026 — Mai 2026", exp0Title:"Data Engineering Intern", exp0Org:"Société Nationale d'Assurance (SAA), Annaba", exp0Text:"Stage en ingénierie de données au sein d'une compagnie d'assurance, contribution au traitement et à l'analyse de données.",
+    exp1Period:"Avr 2025 — Présent", exp1Title:"Data Engineer (Freelance)", exp1Org:"Freelance, Annaba", exp1Text:"Analyse et traitement de données avec Python (Pandas, NumPy) et R, conception de bases SQL, création de dashboards Power BI et Excel.",
+    exp2Period:"Juin 2024 — Présent", exp2Title:"WordPress Developer (Freelance)", exp2Org:"Freelance, Annaba", exp2Text:"Conception de sites professionnels avec WordPress, Elementor et Divi, personnalisation de thèmes et optimisation SEO, vitesse et sécurité.",
+    exp3Period:"Fév 2024 — Présent", exp3Title:"Web Developer (Freelance)", exp3Org:"Freelance, Annaba", exp3Text:"Développement d'applications web responsives avec HTML, CSS, JavaScript, PHP et Laravel, interfaces modernes et backend sécurisé.",
+    skillsTitle:"Compétences",
+    workEyebrow:"Réalisations", workTitle:"Mes projets", workDesc:"Une sélection de projets en data et développement web.",
+    filterAll:"Tous", filterData:"Data", filterBi:"BI & Dashboards", filterWeb:"Web", filterWordpress:"WordPress",
+    p1Tag:"Data", p1Title:"Analyse de données assurance", p1Text:"Nettoyage et analyse de données avec Python (Pandas, NumPy) durant un stage en compagnie d'assurance.",
+    p2Tag:"BI & Dashboards", p2Title:"Dashboard de suivi métier", p2Text:"Tableau de bord Power BI et Excel pour le suivi de KPIs, réalisé pour un client freelance.",
+    p3Tag:"Data", p3Title:"Conception de base de données SQL", p3Text:"Conception et gestion de bases de données relationnelles (MySQL, PostgreSQL) pour un projet client.",
+    p4Tag:"Web", p4Title:"Application web Laravel", p4Text:"Application web responsive avec Laravel, PHP et JavaScript, backend sécurisé.",
+    p5Tag:"WordPress", p5Title:"Site professionnel WordPress", p5Text:"Site vitrine avec WordPress, Elementor et Divi, optimisé vitesse, SEO et sécurité.",
+    p6Tag:"Web", p6Title:"Interface React", p6Text:"Interface utilisateur moderne développée avec React, axée sur la performance et l'expérience utilisateur.",
+    viewProject:"Voir le projet",
+    contactEyebrow:"Contact", contactTitle:"Discutons de votre projet",
+    contactNote:"Disponible pour des missions freelance ou des opportunités en data engineering et développement web.",
+    labelEmail:"Email", labelPhone:"Téléphone", labelLocation:"Localisation", locationValue:"Annaba, Algérie",
+    labelName:"Nom", labelEmailForm:"Email", labelSubject:"Sujet", labelMessage:"Message",
+    phName:"Votre nom", phEmail:"vous@example.com", phSubject:"Objet du message", phMessage:"Votre message...",
+    sendMessage:"Envoyer le message", formNoteText:"Message envoyé — merci, je reviens vers vous rapidement !",
+    footerText:"© 2026 Nihed Mebrek. Tous droits réservés."
+  },
+  en:{
+    navAbout:"About", navResume:"Resume", navWork:"Work", navContact:"Contact", navCta:"Get in touch",
+    heroEyebrow:"Big Data Engineer · Full Stack Developer",
+    heroDesc:"Big Data Engineer and Full Stack Developer with a Master's degree in Big Data. I build data-driven solutions and scalable web applications, passionate about transforming complex data into actionable insights.",
+    heroCta1:"View my work", heroCta2:"Let's talk",
+    stat1:"Years of experience", stat2:"Projects delivered", stat3:"Technologies mastered",
+    aboutEyebrow:"Introduction", aboutTitle:"About me",
+    aboutP1:"Hi there! I'm Nihed Mebrek, a Big Data Engineer and Full Stack Developer with a Master's degree in Big Data Management and Analysis from Badji Mokhtar Annaba University.",
+    aboutP2:"I combine data processing and analysis with Python, R and SQL, with web development using Laravel, PHP, React and WordPress — delivering complete solutions, from raw data to user interface.",
+    cap1Title:"Data processing & analysis", cap1Text:"Data analysis with Python (Pandas, NumPy) and R, SQL database design.",
+    cap2Title:"BI & Dashboards", cap2Text:"Dashboards and reports with Power BI and Excel for decision-making.",
+    cap3Title:"Web Development", cap3Text:"Responsive web applications with Laravel, PHP, React, HTML/CSS/JS.",
+    cap4Title:"WordPress & CMS", cap4Text:"Professional websites with WordPress, Elementor and Divi, optimized for SEO and performance.",
+    resumeEyebrow:"Resume", resumeTitle:"Education & experience", resumeDesc:"A path between data engineering and web development.",
+    educationTitle:"Education", experienceTitle:"Experience",
+    edu1Title:"Master's in Big Data Management and Analysis", edu1Org:"Badji Mokhtar Annaba University", edu1Text:"Specialization in Big Data technologies and data processing. Thesis: development of a startup-oriented project based on Big Data solutions.",
+    edu2Title:"Bachelor's in Computer Science", edu2Org:"Badji Mokhtar Annaba University", edu2Text:"Final Year Project: design and development of a startup-oriented web application.",
+    exp0Period:"Mar 2026 — May 2026", exp0Title:"Data Engineering Intern", exp0Org:"Société Nationale d'Assurance (SAA), Annaba", exp0Text:"Data engineering internship within an insurance company, contributing to data processing and analysis.",
+    exp1Period:"Apr 2025 — Present", exp1Title:"Data Engineer (Freelance)", exp1Org:"Freelance, Annaba", exp1Text:"Analyzing and processing data using Python (Pandas, NumPy) and R, designing SQL databases, building dashboards with Power BI and Excel.",
+    exp2Period:"Jun 2024 — Present", exp2Title:"WordPress Developer (Freelance)", exp2Org:"Freelance, Annaba", exp2Text:"Designing professional websites with WordPress, Elementor and Divi, customizing themes and optimizing for SEO, speed and security.",
+    exp3Period:"Feb 2024 — Present", exp3Title:"Web Developer (Freelance)", exp3Org:"Freelance, Annaba", exp3Text:"Developing responsive web applications with HTML, CSS, JavaScript and Laravel, modern UIs with a secure backend.",
+    skillsTitle:"Skills",
+    workEyebrow:"Work", workTitle:"My projects", workDesc:"A selection of data and web development projects.",
+    filterAll:"All", filterData:"Data", filterBi:"BI & Dashboards", filterWeb:"Web", filterWordpress:"WordPress",
+    p1Tag:"Data", p1Title:"Insurance data analysis", p1Text:"Cleaning and analyzing data with Python (Pandas, NumPy) during an internship at an insurance company.",
+    p2Tag:"BI & Dashboards", p2Title:"Business tracking dashboard", p2Text:"Power BI and Excel dashboard for KPI tracking, built for a freelance client.",
+    p3Tag:"Data", p3Title:"SQL database design", p3Text:"Designing and managing relational databases (MySQL, PostgreSQL) for a client project.",
+    p4Tag:"Web", p4Title:"Laravel web application", p4Text:"Responsive web application built with Laravel, PHP and JavaScript, secure backend.",
+    p5Tag:"WordPress", p5Title:"WordPress business site", p5Text:"Showcase website with WordPress, Elementor and Divi, optimized for speed, SEO and security.",
+    p6Tag:"Web", p6Title:"React interface", p6Text:"Modern user interface built with React, focused on performance and user experience.",
+    viewProject:"View project",
+    contactEyebrow:"Contact", contactTitle:"Let's talk about your project",
+    contactNote:"Available for freelance work or opportunities in data engineering and web development.",
+    labelEmail:"Email", labelPhone:"Phone", labelLocation:"Location", locationValue:"Annaba, Algeria",
+    labelName:"Name", labelEmailForm:"Email", labelSubject:"Subject", labelMessage:"Message",
+    phName:"Your name", phEmail:"you@example.com", phSubject:"Subject", phMessage:"Your message...",
+    sendMessage:"Send message", formNoteText:"Message sent — thanks, I'll get back to you soon!",
+    footerText:"© 2026 Nihed Mebrek. All rights reserved."
+  }
+};
+
+const heroHTML = {
+  fr:'Nihed Mebrek, <em>ingénierie de données</em> &amp; développement web.',
+  en:'Nihed Mebrek, <em>data engineering</em> &amp; web development.'
+};
+
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  const d = dict[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(d[key] !== undefined) el.textContent = d[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-placeholder');
+    if(d[key] !== undefined) el.setAttribute('placeholder', d[key]);
+  });
+  document.querySelector('[data-i18n-html="heroName"]').innerHTML = heroHTML[lang];
+  document.getElementById('langFR').classList.toggle('active', lang==='fr');
+  document.getElementById('langEN').classList.toggle('active', lang==='en');
+}
+document.getElementById('langFR').addEventListener('click', ()=>applyLang('fr'));
+document.getElementById('langEN').addEventListener('click', ()=>applyLang('en'));
+
+// active nav link on scroll
+const links = document.querySelectorAll('.nav-links a');
+const sections = [...links].map(l=>document.querySelector(l.getAttribute('href')));
+window.addEventListener('scroll', ()=>{
+  let idx = 0;
+  sections.forEach((s,i)=>{ if(s && window.scrollY >= s.offsetTop - 120) idx = i; });
+  links.forEach(l=>l.classList.remove('active'));
+  links[idx].classList.add('active');
+});
+
+// filters
+document.getElementById('filters').addEventListener('click', (e)=>{
+  const btn = e.target.closest('button');
+  if(!btn) return;
+  document.querySelectorAll('#filters button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('.project-card').forEach(card=>{
+    card.style.display = (filter==='all' || card.dataset.category===filter) ? '' : 'none';
+  });
+});
+
+// contact form
+document.getElementById('contactForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  document.getElementById('formNote').classList.add('show');
+  e.target.reset();
+});
+</script>
+</body>
+</html>
